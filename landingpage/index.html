@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>
+            DataSidekick — Editor visual para LocalStorage e SessionStorage
+        </title>
+        <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta
+            name="description"
+            content="DataSidekick é uma extensão Chrome para visualizar, buscar, editar, importar e exportar LocalStorage e SessionStorage com um editor visual de JSON."
+        />
+        <meta
+            property="og:title"
+            content="DataSidekick — sua central de dados locais"
+        />
+        <meta
+            property="og:description"
+            content="Editor visual moderno para LocalStorage e SessionStorage. Visualize, edite, importe e exporte dados da aba atual."
+        />
+        <meta property="og:image" content="assets/marquee.png" />
+        <meta name="theme-color" content="#0F172A" />
+        <link rel="icon" href="assets/logo.png" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="noise"></div>
+
+        <header class="site-header">
+            <a class="brand" href="#top" aria-label="DataSidekick home">
+                <img src="assets/logo.png" alt="" />
+                <span>DataSidekick</span>
+                <strong>v0.1.3</strong>
+            </a>
+
+            <nav class="nav" aria-label="Navegação principal">
+                <a href="#features">Recursos</a>
+                <a href="#privacy">Privacidade</a>
+                <a href="#how-it-works">Como funciona</a>
+                <a class="nav-cta" href="#install">Instalar</a>
+                <a
+                    class="help-anchor"
+                    href="#creator"
+                    aria-label="Sobre o criador e links do projeto"
+                    >?</a
+                >
+            </nav>
+
+            <button
+                class="menu-button"
+                type="button"
+                aria-label="Abrir menu"
+                aria-expanded="false"
+            >
+                <span></span><span></span><span></span>
+            </button>
+        </header>
+
+        <main id="top">
+            <section class="hero">
+                <div class="hero-copy">
+                    <div class="eyebrow">
+                        <span class="dot"></span>
+                        Extensão Chrome para desenvolvedores
+                    </div>
+
+                    <h1>Sua central visual para dados locais do navegador.</h1>
+
+                    <p>
+                        Visualize, busque, edite, importe e exporte dados de
+                        <strong>LocalStorage</strong> e
+                        <strong>SessionStorage</strong>
+                        com foco na aba atual e um editor visual de JSON.
+                    </p>
+
+                    <div class="hero-actions" id="install">
+                        <a
+                            class="button primary"
+                            href="#"
+                            aria-label="Instalar DataSidekick"
+                        >
+                            Instalar no Chrome
+                        </a>
+                        <a class="button secondary" href="#features">
+                            Ver recursos
+                        </a>
+                    </div>
+
+                    <div
+                        class="trust-row"
+                        aria-label="Destaques de privacidade e segurança"
+                    >
+                        <span>Sem servidor externo</span>
+                        <span>Dados locais</span>
+                        <span>Foco na aba atual</span>
+                    </div>
+                </div>
+
+                <div class="hero-media">
+                    <img
+                        src="assets/marquee.png"
+                        alt="Interface do DataSidekick mostrando editor visual de JSON e lista de chaves."
+                    />
+                </div>
+            </section>
+
+            <section class="purpose-card">
+                <div>
+                    <h2>Propósito único e claro</h2>
+                    <p>
+                        O DataSidekick existe para ajudar desenvolvedores a
+                        inspecionar e editar dados locais do navegador de forma
+                        rápida, visual e segura — diretamente no painel lateral
+                        do Chrome.
+                    </p>
+                </div>
+                <div class="purpose-badge">Chrome Side Panel</div>
+            </section>
+
+            <section class="features" id="features">
+                <div class="section-heading">
+                    <span>Recursos principais</span>
+                    <h2>Menos sofrimento. Mais controle.</h2>
+                    <p>
+                        Feito para quando você precisa editar storage sem abrir
+                        mão de legibilidade, precisão e segurança.
+                    </p>
+                </div>
+
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="icon">⌘</div>
+                        <h3>Busca inteligente</h3>
+                        <p>
+                            Encontre chaves e valores rapidamente, inclusive
+                            dentro de JSON aninhado.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">{ }</div>
+                        <h3>Editor visual de JSON</h3>
+                        <p>
+                            JSON válido não aparece compactado como string. Ele
+                            vira uma árvore visual editável.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">◎</div>
+                        <h3>Foco na aba atual</h3>
+                        <p>
+                            Mostra os dados da origem atual para evitar mistura
+                            com dados de outros apps.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">⇅</div>
+                        <h3>Importar e exportar</h3>
+                        <p>
+                            Salve backups em JSON ou restaure dados locais com
+                            poucos cliques.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">☆</div>
+                        <h3>Favoritos e organização</h3>
+                        <p>
+                            Marque chaves importantes, oculte ruído e mantenha o
+                            foco no que importa.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="icon">◐</div>
+                        <h3>Tema e fonte</h3>
+                        <p>
+                            Dark mode por padrão, light mode opcional e ajuste
+                            de tamanho da fonte.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="showcase">
+                <div class="showcase-copy">
+                    <span>Interface</span>
+                    <h2>Feito para uso real no dia a dia.</h2>
+                    <p>
+                        O painel lateral permite editar dados sem sair da
+                        página. A lista de chaves, os badges de tipo, as ações
+                        rápidas e o editor visual reduzem cliques e erros.
+                    </p>
+                    <ul>
+                        <li>Edição inline para valores simples.</li>
+                        <li>Botões claros para salvar, resetar e excluir.</li>
+                        <li>Confirmações para ações destrutivas.</li>
+                    </ul>
+                </div>
+
+                <img
+                    src="assets/screenshot.png"
+                    alt="Screenshot do DataSidekick em tema escuro."
+                />
+            </section>
+
+            <section class="privacy" id="privacy">
+                <div class="section-heading compact">
+                    <span>Privacidade</span>
+                    <h2>Seus dados ficam no seu navegador.</h2>
+                </div>
+
+                <div class="privacy-grid">
+                    <div>
+                        <h3>Sem coleta de dados</h3>
+                        <p>
+                            A extensão não vende, transmite ou compartilha dados
+                            do usuário. O acesso ao storage acontece localmente
+                            para exibição e edição solicitadas pelo usuário.
+                        </p>
+                    </div>
+                    <div>
+                        <h3>Sem código remoto</h3>
+                        <p>
+                            O HTML, CSS e JavaScript são empacotados dentro da
+                            extensão. O DataSidekick não carrega scripts
+                            hospedados remotamente.
+                        </p>
+                    </div>
+                    <div>
+                        <h3>Permissões justificadas</h3>
+                        <p>
+                            As permissões são usadas para abrir o painel
+                            lateral, detectar a aba ativa e executar código
+                            local no contexto da página atual.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="steps" id="how-it-works">
+                <div class="section-heading compact">
+                    <span>Como funciona</span>
+                    <h2>Do storage ao JSON editável em segundos.</h2>
+                </div>
+
+                <ol class="step-list">
+                    <li>
+                        <strong>Abra o painel lateral</strong>
+                        <span
+                            >O DataSidekick aparece ao lado da página
+                            atual.</span
+                        >
+                    </li>
+                    <li>
+                        <strong>Escolha LocalStorage ou SessionStorage</strong>
+                        <span>A extensão detecta a origem da aba ativa.</span>
+                    </li>
+                    <li>
+                        <strong>Busque e edite</strong>
+                        <span
+                            >Edite valores simples inline ou JSON em árvore
+                            visual.</span
+                        >
+                    </li>
+                    <li>
+                        <strong>Salve, importe ou exporte</strong>
+                        <span
+                            >Faça backup ou restaure dados em JSON
+                            localmente.</span
+                        >
+                    </li>
+                </ol>
+            </section>
+
+            <section class="creator" id="creator">
+                <div class="creator-card">
+                    <div class="creator-profile">
+                        <div class="avatar" aria-hidden="true">RN</div>
+                        <div>
+                            <span>Criado por</span>
+                            <h2>Rodrigo Nascimento</h2>
+                            <p>
+                                Desenvolvedor e criador do DataSidekick — uma
+                                extensão feita para tornar a edição de dados
+                                locais no Chrome mais visual, rápida e
+                                confiável.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="social-links"
+                        aria-label="Links de Rodrigo Nascimento e DataSidekick"
+                    >
+                        <a
+                            href="https://www.linkedin.com/in/rodrigocesarnascimento/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M6.94 8.9H3.7v10.4h3.24V8.9ZM5.32 7.5a1.88 1.88 0 1 0 0-3.76 1.88 1.88 0 0 0 0 3.76Zm13.98 6.02c0-3.16-1.68-4.62-3.93-4.62a3.38 3.38 0 0 0-3.05 1.68h-.04V8.9H9.18v10.4h3.24v-5.15c0-1.36.25-2.67 1.94-2.67 1.66 0 1.68 1.55 1.68 2.75v5.07h3.25v-5.78Z"
+                                />
+                            </svg>
+                            <div>
+                                <strong>LinkedIn</strong>
+                                <small>Perfil profissional</small>
+                            </div>
+                        </a>
+
+                        <a
+                            href="https://x.com/_whiletruedo"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M14.18 10.16 22.66 0h-2.01l-7.36 8.82L7.41 0H.63l8.9 13.34L.63 24h2.01l7.78-9.32L16.63 24h6.78l-9.23-13.84Zm-2.75 3.29-.9-1.33L3.35 1.56h3.1l5.78 8.5.9 1.33 7.53 11.08h-3.1l-6.13-9.02Z"
+                                />
+                            </svg>
+                            <div>
+                                <strong>Twitter / X</strong>
+                                <small>@_whiletruedo</small>
+                            </div>
+                        </a>
+
+                        <a
+                            href="https://github.com/rodrigocnascimento/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 .5A11.5 11.5 0 0 0 8.36 22.9c.58.11.79-.25.79-.56v-2.15c-3.22.7-3.9-1.37-3.9-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.04 1.76 2.72 1.25 3.38.96.11-.75.4-1.25.74-1.54-2.57-.29-5.28-1.29-5.28-5.73 0-1.27.45-2.3 1.2-3.11-.12-.29-.52-1.47.11-3.07 0 0 .97-.31 3.18 1.19A11.08 11.08 0 0 1 12 5.93c.98 0 1.96.13 2.88.39 2.2-1.5 3.18-1.19 3.18-1.19.63 1.6.23 2.78.11 3.07.75.82 1.2 1.85 1.2 3.11 0 4.46-2.71 5.43-5.3 5.72.42.36.79 1.07.79 2.16v3.15c0 .31.21.68.8.56A11.5 11.5 0 0 0 12 .5Z"
+                                />
+                            </svg>
+                            <div>
+                                <strong>GitHub</strong>
+                                <small>@rodrigocnascimento</small>
+                            </div>
+                        </a>
+
+                        <a
+                            class="repo-link"
+                            href="https://github.com/rodrigocnascimento/datasidekick"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M7.5 3.75A2.75 2.75 0 0 0 4.75 6.5v11A2.75 2.75 0 0 0 7.5 20.25h9A2.75 2.75 0 0 0 19.25 17.5v-11A2.75 2.75 0 0 0 16.5 3.75h-9Zm0 1.5h9c.69 0 1.25.56 1.25 1.25v11c0 .69-.56 1.25-1.25 1.25h-9c-.69 0-1.25-.56-1.25-1.25v-11c0-.69.56-1.25 1.25-1.25Zm1.75 3a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5Zm0 3a.75.75 0 0 0 0 1.5h5.5a.75.75 0 0 0 0-1.5h-5.5Zm0 3a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5h-3.5Z"
+                                />
+                            </svg>
+                            <div>
+                                <strong>Repositório do projeto</strong>
+                                <small
+                                    >github.com/rodrigocnascimento/datasidekick</small
+                                >
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site-footer">
+            <div>
+                <strong>DataSidekick</strong>
+                <span
+                    >Editor visual para LocalStorage e SessionStorage ·
+                    v0.1.3</span
+                >
+            </div>
+            <a href="#top">Voltar ao topo</a>
+        </footer>
+
+        <script src="script.js"></script>
+    </body>
+</html>
