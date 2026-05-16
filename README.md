@@ -1,6 +1,6 @@
 # DataSidekick
 
-![O DataSidekick é uma extensão do Chrome para desenvolvedores](ladingpage/assets/marquee.png)
+![O DataSidekick é uma extensão do Chrome para desenvolvedores](landingpage/assets/marquee.png)
 
 O DataSidekick é uma extensão do Chrome para desenvolvedores que desejam uma maneira mais limpa, rápida e visual de inspecionar e editar o armazenamento do navegador.
 
