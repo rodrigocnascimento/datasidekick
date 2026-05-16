@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.1.2
+
+### Adicionado
+- Adicionado o CNAME para reconhecimento do DNS
+
+### Alterado
+- N/A
+
 ## v0.1.1
 
 ### Adicionado
