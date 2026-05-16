@@ -1,49 +1,27 @@
 # Changelog
 
-## v0.1.3
-
-### Adicionado
-- Exibição da origem da aba atual com formatação mais limpa.
-- Opção para exibir novamente chaves ocultas individuais.
-- Página inicial para apresentação do projeto e avaliação na Chrome Web Store.
-- Seção de criador/contato com links para LinkedIn, Twitter/X, GitHub e repositório do projeto.
-
-### Alterado
-- Legibilidade aprimorada do indicador de origem.
-- Navegação da página inicial refinada com um ponto de interrogação compacto.
-- Todas as referências públicas foram atualizadas para `v0.1.3`.
-
-## v0.1.2
-
-### Adicionado
-- Leitura do armazenamento com escopo de aba/origem atual.
-- Indicador mostrando a origem ativa.
-- Suporte a chaves ocultas.
-- Favoritos por origem/armazenamento.
-- Opção para ocultar chaves de SDK/análise com informações irrelevantes.
-- Exportação de metadados com informações de origem.
-
 ## v0.1.1
 
 ### Adicionado
-- Menu de configurações.
-- Alternância entre tema claro e escuro.
-- Controles de tamanho da fonte.
-- Ícones de seta SVG para navegação em árvore JSON.
-- Estilização de botões para ações de adicionar/excluir.
+- Landing page estática para apresentação do DataSidekick.
+- Seção principal com chamada para instalação.
+- Lista de recursos da extensão.
+- Seção de privacidade.
+- Seção “Como funciona”.
+- Card com links do Rodrigo Nascimento.
+- Link para o repositório oficial do projeto.
+- Âncora compacta `?` no menu para acessar o card de informações.
 
-### Alterações
-- Alinhamento de ícones aprimorado.
-- Layout atualizado com base na direção refinada da interface.
+### Alterado
+- Versão exibida atualizada para `v0.1.3` do plugin.
+- Navegação simplificada.
+- Cards sociais refinados com ícones SVG.
+- Textos ajustados para explicar melhor o propósito da extensão.
 
 ## v0.1.0
 
-### Adições
-- Extensão MV3 para Chrome com suporte ao Painel Lateral.
-- Visualizador de LocalStorage e SessionStorage.
-- Busca por chave/valor.
-- Editor visual de árvore JSON.
-- Edição em linha para valores simples.
-- Importação/exportação de JSON.
-- Ações de copiar, excluir chave e limpar o armazenamento.
-- Interface com tema escuro.
+### Adicionado
+- Primeira versão da landing page.
+- HTML, CSS e JavaScript sem dependências externas.
+- Layout responsivo.
+- Visual dark mode alinhado com a identidade do DataSidekick.
