@@ -1,5 +1,7 @@
 # DataSidekick
 
+![O DataSidekick é uma extensão do Chrome para desenvolvedores](ladingpage/assets/marquee.png)
+
 O DataSidekick é uma extensão do Chrome para desenvolvedores que desejam uma maneira mais limpa, rápida e visual de inspecionar e editar o armazenamento do navegador.
 
 Ele abre como um painel lateral do Chrome e permite que você trabalhe com `localStorage` e `sessionStorage` diretamente da origem da aba atual, sem precisar vasculhar as Ferramentas de Desenvolvedor ou editar JSON como uma string compactada bruta.
