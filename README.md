@@ -37,7 +37,7 @@ http://localhost:3000
 Antes de publicar, atualize no `index.html`:
 
 - link do botão **Instalar no Chrome**;
-- imagens em `assets/`, caso queira trocar screenshots ou material promocional;
+- imagens em `assets/`, caso queira trocar capturas de ecrã ou material promocional;
 - links sociais e repositório, se necessário.
 
 ## Deploy

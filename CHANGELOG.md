@@ -29,7 +29,7 @@
 ### Alterado
 - Mensagem do console do playground agora separa claramente chaves de LocalStorage e SessionStorage.
 - Melhorados o título, a descrição da página e os atributos de performance das imagens principais.
-- Hero e screenshot agora usam `<picture>` com WebP e fallback PNG.
+- Hero e captura de ecrã agora usam `<picture>` com WebP e fallback PNG.
 
 ## v0.1.2
 
