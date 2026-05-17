@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="en">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>
-            DataSidekick | Editor visual de LocalStorage e SessionStorage
+            DataSidekick | Visual editor for LocalStorage and SessionStorage
         </title>
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Rodrigo Nascimento" />
         <meta name="application-name" content="DataSidekick" />
-        <link rel="canonical" href="https://datasidekick.site/" />
+        <link rel="canonical" href="https://datasidekick.site/en/" />
         <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -28,23 +28,23 @@
             href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
-        <link rel="alternate" hreflang="en" href="https://datasidekick.site/en/" />
+        <link rel="alternate" hreflang="pt-BR" href="https://datasidekick.site/" />
 
         <meta
             name="description"
-            content="Extensão Chrome para visualizar, buscar, editar, importar e exportar LocalStorage e SessionStorage com editor visual de JSON e foco na aba atual."
+            content="Chrome extension to view, search, edit, import and export LocalStorage and SessionStorage with a visual JSON editor focused on the current tab."
         />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://datasidekick.site/" />
+        <meta property="og:url" content="https://datasidekick.site/en/" />
         <meta property="og:site_name" content="DataSidekick" />
-        <meta property="og:locale" content="pt_BR" />
+        <meta property="og:locale" content="en_US" />
         <meta
             property="og:title"
-            content="DataSidekick | Editor visual de LocalStorage e SessionStorage"
+            content="DataSidekick | Visual editor for LocalStorage and SessionStorage"
         />
         <meta
             property="og:description"
-            content="Inspecione, edite, importe e exporte dados locais do navegador diretamente no painel lateral do Chrome."
+            content="Inspect, edit, import and export browser local data directly from the Chrome side panel."
         />
         <meta
             property="og:image"
@@ -54,24 +54,24 @@
         <meta property="og:image:height" content="793" />
         <meta
             property="og:image:alt"
-            content="Interface do DataSidekick mostrando editor visual de JSON e lista de chaves."
+            content="DataSidekick interface showing visual JSON editor and key list."
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
             name="twitter:title"
-            content="DataSidekick | Editor de LocalStorage e SessionStorage"
+            content="DataSidekick | LocalStorage and SessionStorage editor"
         />
         <meta
             name="twitter:description"
-            content="Extensão Chrome para visualizar, editar, importar e exportar LocalStorage e SessionStorage com editor visual de JSON."
+            content="Chrome extension to view, edit, import and export LocalStorage and SessionStorage with a visual JSON editor."
         />
         <meta
             name="twitter:image"
             content="https://datasidekick.site/assets/marquee.png"
         />
         <meta name="theme-color" content="#0F172A" />
-        <link rel="icon" href="assets/logo.png" />
-        <link rel="stylesheet" href="styles.css" />
+        <link rel="icon" href="../assets/logo.png" />
+        <link rel="stylesheet" href="../styles.css" />
         <script type="application/ld+json">
             {
                 "@context": "https://schema.org",
@@ -79,19 +79,19 @@
                 "name": "DataSidekick",
                 "applicationCategory": "DeveloperApplication",
                 "operatingSystem": "Chrome",
-                "description": "Extensão Chrome para visualizar, buscar, editar, importar e exportar LocalStorage e SessionStorage com editor visual de JSON.",
-                "url": "https://datasidekick.site/",
+                "description": "Chrome extension to view, search, edit, import and export LocalStorage and SessionStorage with a visual JSON editor.",
+                "url": "https://datasidekick.site/en/",
                 "image": "https://datasidekick.site/assets/marquee.png",
                 "author": {
                     "@type": "Person",
                     "name": "Rodrigo Nascimento",
                     "url": "https://github.com/rodrigocnascimento"
                 },
-                "softwareVersion": "0.1.3",
+                "softwareVersion": "0.1.4",
                 "offers": {
                     "@type": "Offer",
                     "price": "0",
-                    "priceCurrency": "BRL"
+                    "priceCurrency": "USD"
                 }
             }
         </script>
@@ -138,30 +138,30 @@
 
         <header class="site-header">
             <a class="brand" href="#top" aria-label="DataSidekick home">
-                <img src="assets/logo.png" alt="DataSidekick" />
+                <img src="../assets/logo.png" alt="DataSidekick" />
                 <span>DataSidekick</span>
                 <strong>v0.1.4</strong>
             </a>
 
-            <nav class="nav" aria-label="Navegação principal">
-                <a href="#features">Recursos</a>
+            <nav class="nav" aria-label="Main navigation">
+                <a href="#features">Features</a>
                 <a href="#playground">Playground</a>
-                <a href="#privacy">Privacidade</a>
-                <a href="#how-it-works">Como funciona</a>
-                <a class="nav-cta" href="#install">Instalar</a>
+                <a href="#privacy">Privacy</a>
+                <a href="#how-it-works">How it works</a>
+                <a class="nav-cta" href="#install">Install</a>
                 <a
                     class="help-anchor"
                     href="#creator"
-                    aria-label="Sobre o criador e links do projeto"
+                    aria-label="About the creator and project links"
                     >?</a
                 >
-                <a class="lang-switcher" href="/en/" aria-label="Switch to English">EN</a>
+                <a class="lang-switcher" href="/" aria-label="Mudar para português">PT</a>
             </nav>
 
             <button
                 class="menu-button"
                 type="button"
-                aria-label="Abrir menu"
+                aria-label="Open menu"
                 aria-expanded="false"
             >
                 <span></span><span></span><span></span>
@@ -173,31 +173,30 @@
                 <div class="hero-copy">
                     <div class="eyebrow">
                         <span class="dot"></span>
-                        Extensão do Chrome para desenvolvedores
+                        Chrome extension for developers
                     </div>
 
                     <h1>
-                        Editor visual de LocalStorage e SessionStorage para
-                        Chrome.
+                        Visual editor for LocalStorage and SessionStorage.
                     </h1>
 
                     <p>
-                        Visualize, busque, edite, importe e exporte dados de
-                        <strong>LocalStorage</strong> e
+                        View, search, edit, import and export
+                        <strong>LocalStorage</strong> and
                         <strong>SessionStorage</strong>
-                        com foco na aba atual e um editor visual de JSON.
-                        <a href="#use-cases" class="subtle-link">Ver casos de uso</a>.
+                        data with focus on the current tab and a visual JSON editor.
+                        <a href="#use-cases" class="subtle-link">See use cases</a>.
                     </p>
 
                     <div class="hero-actions" id="install">
                         <a
                             class="button primary"
                             href="#"
-                            aria-label="Instalar DataSidekick"
+                            aria-label="Install DataSidekick"
                             data-analytics-event="install_click"
                             data-analytics-label="hero_install"
                         >
-                            Instalar no Chrome
+                            Install on Chrome
                         </a>
                         <a
                             class="button secondary"
@@ -205,36 +204,35 @@
                             data-analytics-event="secondary_cta_click"
                             data-analytics-label="hero_features"
                         >
-                            Ver recursos
+                            View features
                         </a>
                     </div>
 
                     <div
                         class="trust-row"
-                        aria-label="Destaques de privacidade e segurança"
+                        aria-label="Privacy and security highlights"
                     >
-                        <span>Sem servidor externo</span>
-                        <span>Dados locais</span>
-                        <span>Foco na aba atual</span>
+                        <span>No external server</span>
+                        <span>Local data only</span>
+                        <span>Current tab focus</span>
                     </div>
                 </div>
 
                 <div class="hero-media">
                     <img
-                        src="assets/marquee.png"
-                        alt="Interface do DataSidekick mostrando editor visual de JSON e lista de chaves."
+                        src="../assets/marquee.png"
+                        alt="DataSidekick interface showing visual JSON editor and key list."
                     />
                 </div>
             </section>
 
             <section class="purpose-card">
                 <div>
-                    <h2>Propósito único e claro</h2>
+                    <h2>Clear and simple purpose</h2>
                     <p>
-                        O DataSidekick existe para ajudar desenvolvedores a
-                        inspecionar e editar dados locais do navegador de forma
-                        rápida, visual e segura — diretamente no painel lateral
-                        do Chrome.
+                        DataSidekick exists to help developers inspect and edit
+                        browser local data quickly, visually, and securely —
+                        directly from the Chrome side panel.
                     </p>
                 </div>
                 <div class="purpose-badge">Chrome Side Panel</div>
@@ -243,13 +241,12 @@
             <section class="playground" id="playground">
                 <div class="playground-copy">
                     <span>Playground</span>
-                    <h2>Teste o DataSidekick com dados reais de demonstração.</h2>
+                    <h2>Try DataSidekick with real demo data.</h2>
                     <p>
-                        Esta página pode criar exemplos complexos em
-                        <strong>localStorage</strong> e
-                        <strong>sessionStorage</strong> para você abrir o
-                        painel lateral e explorar a extensão em uma origem
-                        segura.
+                        This page can create complex examples in
+                        <strong>localStorage</strong> and
+                        <strong>sessionStorage</strong> so you can open the
+                        side panel and explore the extension on a safe origin.
                     </p>
 
                     <div class="playground-actions">
@@ -258,151 +255,151 @@
                             type="button"
                             data-demo-action="seed"
                         >
-                            Criar dados demo
+                            Create demo data
                         </button>
                         <button
                             class="button secondary"
                             type="button"
                             data-demo-action="clear"
                         >
-                            Limpar dados demo
+                            Clear demo data
                         </button>
                     </div>
 
                     <p class="playground-status" data-demo-status>
-                        Abra o console ou use os botões para preparar esta
-                        origem.
+                        Open the console or use the buttons to prepare this
+                        origin.
                     </p>
                 </div>
 
-                <div class="console-panel" aria-label="Instruções do console">
+                <div class="console-panel" aria-label="Console instructions">
                     <div class="console-topbar">
                         <span></span><span></span><span></span>
                     </div>
                     <pre><code>DataSidekick demo
 
-1. Clique em "Criar dados demo".
-2. Abra o painel lateral do DataSidekick.
-3. Compare LocalStorage e SessionStorage.
-4. Edite JSON, exporte, importe e limpe chaves.
+1. Click "Create demo data".
+2. Open the DataSidekick side panel.
+3. Compare LocalStorage and SessionStorage.
+4. Edit JSON, export, import and clear keys.
 
-prefixo: datasidekick.demo.</code></pre>
+prefix: datasidekick.demo.</code></pre>
                 </div>
             </section>
 
             <section class="features" id="features">
                 <div class="section-heading">
-                    <span>Recursos principais</span>
-                    <h2>Menos sofrimento. Mais controle.</h2>
+                    <span>Key features</span>
+                    <h2>Less hassle. More control.</h2>
                     <p>
-                        Feito para quando você precisa editar storage sem abrir
-                        mão de legibilidade, precisão e segurança.
+                        Built for when you need to edit storage without
+                        sacrificing readability, accuracy, and security.
                     </p>
                 </div>
 
                 <div class="feature-grid">
                     <article class="feature-card">
                         <div class="icon">⌘</div>
-                        <h3>Busca inteligente</h3>
+                        <h3>Smart search</h3>
                         <p>
-                            Encontre chaves e valores rapidamente, inclusive
-                            dentro de JSON aninhado.
+                            Find keys and values quickly, including
+                            within nested JSON.
                         </p>
                     </article>
 
                     <article class="feature-card">
                         <div class="icon">{ }</div>
-                        <h3>Editor visual de JSON</h3>
+                        <h3>Visual JSON editor</h3>
                         <p>
-                            JSON válido não aparece compactado como string. Ele
-                            vira uma árvore visual editável.
+                            Valid JSON is no longer displayed as a compact string.
+                            It becomes an editable visual tree.
                         </p>
                     </article>
 
                     <article class="feature-card">
                         <div class="icon">◎</div>
-                        <h3>Foco na aba atual</h3>
+                        <h3>Current tab focus</h3>
                         <p>
-                            Mostra os dados da origem atual para evitar mistura
-                            com dados de outros apps.
+                            Shows data from the current origin to avoid mixing
+                            with other apps.
                         </p>
                     </article>
 
                     <article class="feature-card">
                         <div class="icon">⇅</div>
-                        <h3>Importar e exportar</h3>
+                        <h3>Import and export</h3>
                         <p>
-                            Salve backups em JSON ou restaure dados locais com
-                            poucos cliques.
+                            Save backups as JSON or restore local data with
+                            a few clicks.
                         </p>
                     </article>
 
                     <article class="feature-card">
                         <div class="icon">☆</div>
-                        <h3>Favoritos e organização</h3>
+                        <h3>Bookmarks and organization</h3>
                         <p>
-                            Marque chaves importantes, oculte ruído e mantenha o
-                            foco no que importa.
+                            Mark important keys, hide noise, and stay
+                            focused on what matters.
                         </p>
                     </article>
 
                     <article class="feature-card">
                         <div class="icon">◐</div>
-                        <h3>Tema e fonte</h3>
+                        <h3>Theme and font</h3>
                         <p>
-                            Dark mode por padrão, light mode opcional e ajuste
-                            de tamanho da fonte.
+                            Dark mode by default, optional light mode, and
+                            adjustable font size.
                         </p>
                     </article>
-                    <a href="#playground" class="subtle-link">Experimente no playground →</a>
+                    <a href="#playground" class="subtle-link">Try the playground →</a>
                 </div>
             </section>
 
             <section class="use-cases" id="use-cases">
                 <div class="section-heading compact">
-                    <span>Casos de uso</span>
-                    <h2>Para depurar dados locais sem abrir mão de contexto.</h2>
+                    <span>Use cases</span>
+                    <h2>Debug local data without losing context.</h2>
                     <p>
-                        O DataSidekick ajuda quando o estado da aplicação está
-                        no navegador e você precisa entender, ajustar ou
-                        compartilhar esse estado com rapidez.
+                        DataSidekick helps when your app state lives in the
+                        browser and you need to understand, tweak, or share
+                        that state quickly.
                     </p>
                 </div>
 
                 <div class="use-case-grid">
                     <article>
-                        <h3>Editar JSON no LocalStorage</h3>
+                        <h3>Edit JSON in LocalStorage</h3>
                         <p>
-                            Abra objetos aninhados em uma árvore visual, altere
-                            campos específicos e salve sem reescrever strings
-                            compactadas manualmente.
+                            Open nested objects in a visual tree, change
+                            specific fields, and save without rewriting
+                            compact strings manually.
                         </p>
                     </article>
 
                     <article>
-                        <h3>Inspecionar SessionStorage</h3>
+                        <h3>Inspect SessionStorage</h3>
                         <p>
-                            Veja rascunhos, fluxos temporários, filtros e
-                            estados de sessão da aba atual sem misturar dados de
-                            outras origens.
+                            View drafts, temporary flows, filters, and
+                            session states of the current tab without mixing data
+                            from other origins.
                         </p>
                     </article>
 
                     <article>
-                        <h3>Exportar dados locais em JSON</h3>
+                        <h3>Export local data as JSON</h3>
                         <p>
-                            Gere backups, compartilhe cenários de teste e
-                            restaure estados conhecidos durante desenvolvimento,
-                            QA ou suporte.
+                            Generate backups, share test scenarios, and
+                            restore known states during development,
+                            QA, or support.
                         </p>
                     </article>
 
                     <article>
-                        <h3>Testar feature flags e preferências</h3>
+                        <h3>Test feature flags and preferences</h3>
                         <p>
-                            Ajuste flags, temas, preferências e caches locais
-                            para validar comportamentos sem limpar todo o
-                            navegador.
+                            Tweak flags, themes, preferences, and local caches
+                            to validate behavior without clearing the
+                            entire browser.
                         </p>
                     </article>
                 </div>
@@ -411,98 +408,98 @@ prefixo: datasidekick.demo.</code></pre>
             <section class="showcase">
                 <div class="showcase-copy">
                     <span>Interface</span>
-                    <h2>Feito para uso real no dia a dia.</h2>
+                    <h2>Built for real daily use.</h2>
                     <p>
-                        O painel lateral permite editar dados sem sair da
-                        página. A lista de chaves, os badges de tipo, as ações
-                        rápidas e o editor visual reduzem cliques e erros.
+                        The side panel lets you edit data without leaving the
+                        page. The key list, type badges, quick actions,
+                        and visual editor reduce clicks and errors.
                     </p>
                     <ul>
-                        <li>Edição inline para valores simples.</li>
-                        <li>Botões claros para salvar, resetar e excluir.</li>
-                        <li>Confirmações para ações destrutivas.</li>
+                        <li>Inline editing for simple values.</li>
+                        <li>Clear save, reset, and delete buttons.</li>
+                        <li>Confirmations for destructive actions.</li>
                     </ul>
                 </div>
 
                 <img
-                    src="assets/screenshot.png"
+                    src="../assets/screenshot.png"
                     loading="lazy"
-                    alt="Captura de ecrã do DataSidekick em tema escuro."
+                    alt="DataSidekick screenshot in dark theme."
                 />
             </section>
 
             <section class="privacy" id="privacy">
                 <div class="section-heading compact">
-                    <span>Privacidade</span>
-                    <h2>Seus dados ficam no seu navegador.</h2>
+                    <span>Privacy</span>
+                    <h2>Your data stays in your browser.</h2>
                 </div>
 
                 <div class="privacy-grid">
                     <div>
-                        <h3>Sem coleta de dados</h3>
+                        <h3>No data collection</h3>
                         <p>
-                            A extensão não vende, transmite ou compartilha dados
-                            do usuário. O acesso ao storage acontece localmente
-                            para exibição e edição solicitadas pelo usuário.
+                            The extension does not sell, transmit, or share user
+                            data. Storage access happens locally
+                            for display and editing as requested by the user.
                         </p>
                     </div>
                     <div>
-                        <h3>Sem código remoto</h3>
+                        <h3>No remote code</h3>
                         <p>
-                            O HTML, CSS e JavaScript são empacotados dentro da
-                            extensão. O DataSidekick não carrega scripts
-                            hospedados remotamente.
+                            HTML, CSS, and JavaScript are bundled inside the
+                            extension. DataSidekick does not load remotely
+                            hosted scripts.
                         </p>
                     </div>
                     <div>
-                        <h3>Permissões justificadas</h3>
+                        <h3>Justified permissions</h3>
                         <p>
-                            As permissões são usadas para abrir o painel
-                            lateral, detectar a aba ativa e executar código
-                            local no contexto da página atual.
+                            Permissions are used to open the side
+                            panel, detect the active tab, and execute local
+                            code in the current page context.
                         </p>
                     </div>
                 </div>
 
                 <article class="privacy-detail" id="access-control">
                     <div>
-                        <h3>Como o DataSidekick acessa seus dados</h3>
-                        <p><a href="#faq" class="subtle-link">Perguntas frequentes sobre privacidade →</a></p>
+                        <h3>How DataSidekick accesses your data</h3>
+                        <p><a href="#faq" class="subtle-link">Privacy FAQ →</a></p>
                         <p>
-                            O DataSidekick não solicita acesso permanente a
-                            todos os sites durante a instalação.
+                            DataSidekick does not request permanent access to
+                            all sites during installation.
                         </p>
                         <p>
-                            Quando você abre o painel em uma página, a extensão
-                            identifica a origem atual, por exemplo
-                            <code>localhost:3000</code> ou
-                            <code>app.example.com</code>. Para ler e editar
-                            <code>localStorage</code> e
-                            <code>sessionStorage</code>, o DataSidekick
-                            solicita permissão apenas para aquela origem.
+                            When you open the panel on a page, the extension
+                            identifies the current origin, for example
+                            <code>localhost:3000</code> or
+                            <code>app.example.com</code>. To read and edit
+                            <code>localStorage</code> and
+                            <code>sessionStorage</code>, DataSidekick
+                            requests permission only for that origin.
                         </p>
                     </div>
 
                     <div>
-                        <p>Esse acesso é usado somente para:</p>
+                        <p>This access is used only to:</p>
                         <ul>
                             <li>
-                                listar chaves do LocalStorage e SessionStorage;
+                                list LocalStorage and SessionStorage keys;
                             </li>
-                            <li>exibir valores no painel lateral;</li>
+                            <li>display values in the side panel;</li>
                             <li>
-                                editar valores quando você salva alterações;
+                                edit values when you save changes;
                             </li>
-                            <li>importar ou exportar dados em JSON;</li>
+                            <li>import or export data as JSON;</li>
                             <li>
-                                excluir chaves quando você confirma a ação.
+                                delete keys when you confirm the action.
                             </li>
                         </ul>
                         <p>
-                            O DataSidekick não envia seus dados para servidores
-                            externos, não usa código remoto e não compartilha
-                            dados com terceiros. Tudo acontece localmente no
-                            navegador.
+                            DataSidekick does not send your data to external
+                            servers, does not use remote code, and does not share
+                            data with third parties. Everything happens locally in
+                            the browser.
                         </p>
                     </div>
                 </article>
@@ -510,34 +507,34 @@ prefixo: datasidekick.demo.</code></pre>
 
             <section class="steps" id="how-it-works">
                 <div class="section-heading compact">
-                    <span>Como funciona</span>
-                    <h2>Do storage ao JSON editável em segundos.</h2>
+                    <span>How it works</span>
+                    <h2>From storage to editable JSON in seconds.</h2>
                 </div>
 
                 <ol class="step-list">
                     <li>
-                        <strong>Abra o painel lateral</strong>
+                        <strong>Open the side panel</strong>
                         <span
-                            >O DataSidekick aparece ao lado da página
-                            atual.</span
+                            >DataSidekick appears next to your current
+                            page.</span
                         >
                     </li>
                     <li>
-                        <strong>Escolha LocalStorage ou SessionStorage</strong>
-                        <span>A extensão detecta a origem da aba ativa.</span>
+                        <strong>Choose LocalStorage or SessionStorage</strong>
+                        <span>The extension detects the active tab origin.</span>
                     </li>
                     <li>
-                        <strong>Busque e edite</strong>
+                        <strong>Search and edit</strong>
                         <span
-                            >Edite valores simples inline ou JSON em árvore
-                            visual.</span
+                            >Edit simple values inline or JSON in a visual
+                            tree.</span
                         >
                     </li>
                     <li>
-                        <strong>Salve, importe ou exporte</strong>
+                        <strong>Save, import, or export</strong>
                         <span
-                            >Faça backup ou restaure dados em JSON
-                            localmente.</span
+                            >Back up or restore data as JSON
+                            locally.</span
                         >
                     </li>
                 </ol>
@@ -545,47 +542,47 @@ prefixo: datasidekick.demo.</code></pre>
 
             <section class="faq" id="faq">
                 <div class="section-heading compact">
-                    <span>Perguntas frequentes</span>
-                    <h2>Dúvidas comuns antes de instalar.</h2>
+                    <span>FAQ</span>
+                    <h2>Common questions before installing.</h2>
                 </div>
 
                 <div class="faq-list">
                     <details>
                         <summary>
-                            O DataSidekick envia meus dados para servidores?
+                            Does DataSidekick send my data to servers?
                         </summary>
                         <p>
-                            Não. Os dados de LocalStorage e SessionStorage são
-                            lidos e editados localmente no navegador. A
-                            extensão não envia esses dados para servidores
-                            externos. <a href="#privacy">Saiba mais sobre privacidade</a>.
+                            No. LocalStorage and SessionStorage data is
+                            read and edited locally in the browser. The
+                            extension does not send this data to external
+                            servers. <a href="#privacy">Learn more about privacy</a>.
                         </p>
                     </details>
 
                     <details>
-                        <summary>A extensão acessa todos os sites?</summary>
+                        <summary>Does the extension access all websites?</summary>
                         <p>
-                            Não durante a instalação. Quando você abre o painel
-                            em uma página, o DataSidekick solicita permissão
-                            apenas para a origem atual. <a href="#access-control">Detalhes sobre permissões</a>.
+                            Not during installation. When you open the panel
+                            on a page, DataSidekick requests permission
+                            only for the current origin. <a href="#access-control">Details about permissions</a>.
                         </p>
                     </details>
 
                     <details>
-                        <summary>Posso editar objetos JSON aninhados?</summary>
+                        <summary>Can I edit nested JSON objects?</summary>
                         <p>
-                            Sim. Valores JSON válidos são exibidos como uma
-                            árvore visual editável para facilitar alterações
-                            pontuais. <a href="#playground">Teste na prática</a>.
+                            Yes. Valid JSON values are displayed as an
+                            editable visual tree for easy point edits.
+                            <a href="#playground">Try it out</a>.
                         </p>
                     </details>
 
                     <details>
-                        <summary>Para quem o DataSidekick foi criado?</summary>
+                        <summary>Who is DataSidekick for?</summary>
                         <p>
-                            Para desenvolvedores, QAs e pessoas técnicas que
-                            precisam depurar, editar, importar ou exportar
-                            dados locais de aplicações web. <a href="#features">Veja todos os recursos</a>.
+                            For developers, QAs, and technical people who
+                            need to debug, edit, import, or export
+                            local data from web applications. <a href="#features">See all features</a>.
                         </p>
                     </details>
                 </div>
@@ -596,20 +593,19 @@ prefixo: datasidekick.demo.</code></pre>
                     <div class="creator-profile">
                         <div class="avatar" aria-hidden="true">RN</div>
                         <div>
-                            <span>Criado por</span>
+                            <span>Created by</span>
                             <h2>Rodrigo Nascimento</h2>
                             <p>
-                                Desenvolvedor e criador do DataSidekick — uma
-                                extensão feita para tornar a edição de dados
-                                locais no Chrome mais visual, rápida e
-                                confiável.
+                                Developer and creator of DataSidekick — a
+                                Chrome extension made to make local data editing
+                                more visual, fast, and reliable.
                             </p>
                         </div>
                     </div>
 
                     <div
                         class="social-links"
-                        aria-label="Links de Rodrigo Nascimento e DataSidekick"
+                        aria-label="Links from Rodrigo Nascimento and DataSidekick"
                     >
                         <a
                             href="https://www.linkedin.com/in/rodrigocesarnascimento/"
@@ -625,7 +621,7 @@ prefixo: datasidekick.demo.</code></pre>
                             </svg>
                             <div>
                                 <strong>LinkedIn</strong>
-                                <small>Perfil profissional</small>
+                                <small>Professional profile</small>
                             </div>
                         </a>
 
@@ -679,7 +675,7 @@ prefixo: datasidekick.demo.</code></pre>
                                 />
                             </svg>
                             <div>
-                                <strong>Repositório do projeto</strong>
+                                <strong>Project repository</strong>
                                 <small
                                     >github.com/rodrigocnascimento/datasidekick</small
                                 >
@@ -694,33 +690,33 @@ prefixo: datasidekick.demo.</code></pre>
             <div>
                 <strong>DataSidekick</strong>
                 <span
-                    >Editor visual para LocalStorage e SessionStorage ·
-                     v0.1.4</span
+                    >Visual editor for LocalStorage and SessionStorage ·
+                    v0.1.4</span
                 >
             </div>
-            <a href="#top">Voltar ao topo</a>
+            <a href="#top">Back to top</a>
         </footer>
 
         <aside
             class="consent-banner"
             data-consent-banner
-            aria-label="Preferências de analytics"
+            aria-label="Analytics preferences"
             hidden
         >
             <p>
-                Usamos analytics para entender visitas e melhorar a landing.
-                Você pode aceitar ou manter tudo desativado.
+                We use analytics to understand visits and improve the landing
+                page. You can accept or keep everything disabled.
             </p>
             <div>
                 <button type="button" data-consent-action="deny">
-                    Manter desativado
+                    Keep disabled
                 </button>
                 <button type="button" data-consent-action="accept">
-                    Aceitar analytics
+                    Accept analytics
                 </button>
             </div>
         </aside>
 
-        <script src="script.js"></script>
+        <script src="../script.js"></script>
     </body>
 </html>
