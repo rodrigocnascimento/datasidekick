@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.3
+
+### Adicionado
+- Adicionado playground de demonstração para popular dados complexos em LocalStorage e SessionStorage.
+- Adicionada âncora `#access-control` com detalhes sobre permissões e acesso aos dados.
+- Adicionados exemplos extras de SessionStorage para validar o fluxo completo no DataSidekick.
+
+### Alterado
+- Mensagem do console do playground agora separa claramente chaves de LocalStorage e SessionStorage.
+
 ## v0.1.2
 
 ### Adicionado

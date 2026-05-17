@@ -108,6 +108,23 @@ const demoLocalStorage = {
 };
 
 const demoSessionStorage = {
+  "checkout.session": {
+    id: "chk_demo_7781",
+    startedAt: "2026-05-16T19:22:10.000Z",
+    expiresAt: "2026-05-16T20:22:10.000Z",
+    currentStep: "payment",
+    steps: [
+      { id: "cart", completed: true },
+      { id: "shipping", completed: true },
+      { id: "payment", completed: false },
+      { id: "review", completed: false }
+    ],
+    paymentDraft: {
+      method: "pix",
+      installments: 1,
+      saveMethod: false
+    }
+  },
   "wizard.state": {
     currentStep: 3,
     completedSteps: ["origin", "permissions", "preview"],
@@ -142,7 +159,16 @@ const demoSessionStorage = {
       message: "Abra o DataSidekick para explorar esta origem."
     }
   ],
-  "current-tab": "session-storage"
+  "current-tab": "session-storage",
+  "debug.filters": {
+    query: "datasidekick.demo",
+    storageTypes: ["localStorage", "sessionStorage"],
+    showJsonOnly: false,
+    expandedKeys: [
+      "datasidekick.demo.checkout.session",
+      "datasidekick.demo.wizard.state"
+    ]
+  }
 };
 
 const demoStatus = document.querySelector("[data-demo-status]");
@@ -201,10 +227,16 @@ function printDemoConsole() {
 Dados demo criados nesta origem.
 
 Abra o painel lateral do DataSidekick e procure por:
+
+LocalStorage:
 - ${DEMO_PREFIX}user.profile
 - ${DEMO_PREFIX}cart.snapshot
 - ${DEMO_PREFIX}feature-flags
+
+SessionStorage:
+- ${DEMO_PREFIX}checkout.session
 - ${DEMO_PREFIX}wizard.state
+- ${DEMO_PREFIX}request.draft
 
 Teste edicao, busca, importacao, exportacao e limpeza de chaves.
 `);
