@@ -1,3 +1,83 @@
+const CONSENT_STORAGE_KEY = "datasidekick.analyticsConsent";
+const analyticsLayer = window.dataLayer || (window.dataLayer = []);
+
+function trackEvent(event, properties = {}) {
+  analyticsLayer.push({
+    event,
+    page_path: window.location.pathname,
+    page_hash: window.location.hash || "#top",
+    ...properties
+  });
+}
+
+function updateConsent(value) {
+  if (typeof window.gtag === "function") {
+    window.gtag("consent", "update", {
+      ad_storage: "denied",
+      analytics_storage: value === "granted" ? "granted" : "denied",
+      ad_user_data: "denied",
+      ad_personalization: "denied"
+    });
+  }
+
+  trackEvent("analytics_consent_update", {
+    analytics_storage: value
+  });
+}
+
+function safeGetStorageItem(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (error) {
+    return null;
+  }
+}
+
+function safeSetStorageItem(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (error) {
+    console.warn("DataSidekick consent storage error:", error);
+  }
+}
+
+function initConsentBanner() {
+  const banner = document.querySelector("[data-consent-banner]");
+  const savedConsent = safeGetStorageItem(CONSENT_STORAGE_KEY);
+
+  if (savedConsent === "granted" || savedConsent === "denied") {
+    updateConsent(savedConsent);
+    return;
+  }
+
+  if (!banner) {
+    return;
+  }
+
+  banner.hidden = false;
+
+  banner.querySelectorAll("[data-consent-action]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const consent = button.dataset.consentAction === "accept"
+        ? "granted"
+        : "denied";
+
+      safeSetStorageItem(CONSENT_STORAGE_KEY, consent);
+      updateConsent(consent);
+      banner.hidden = true;
+    });
+  });
+}
+
+function trackAnchorView() {
+  trackEvent("anchor_view", {
+    anchor: window.location.hash || "#top"
+  });
+}
+
+initConsentBanner();
+trackAnchorView();
+
 const menuButton = document.querySelector(".menu-button");
 const nav = document.querySelector(".nav");
 
@@ -15,7 +95,7 @@ if (menuButton && nav) {
   });
 }
 
-const revealItems = document.querySelectorAll(".feature-card, .privacy-grid > div, .step-list li, .purpose-card, .playground, .showcase, .privacy-detail");
+const revealItems = document.querySelectorAll(".feature-card, .use-case-grid article, .privacy-grid > div, .step-list li, .faq-list details, .purpose-card, .playground, .showcase, .privacy-detail");
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -194,6 +274,11 @@ function writeDemoStorage() {
     });
 
     setDemoStatus("Dados demo criados. Abra o DataSidekick nesta pagina.");
+    trackEvent("demo_storage_created", {
+      storage_scope: "localStorage_and_sessionStorage",
+      local_storage_keys: Object.keys(demoLocalStorage).length,
+      session_storage_keys: Object.keys(demoSessionStorage).length
+    });
     printDemoConsole();
   } catch (error) {
     setDemoStatus("Nao foi possivel acessar o storage deste navegador.");
@@ -210,6 +295,9 @@ function clearDemoStorage() {
     });
 
     setDemoStatus("Dados demo removidos desta origem.");
+    trackEvent("demo_storage_cleared", {
+      storage_scope: "localStorage_and_sessionStorage"
+    });
   } catch (error) {
     setDemoStatus("Nao foi possivel limpar o storage deste navegador.");
     console.warn("DataSidekick demo clear error:", error);
@@ -253,11 +341,32 @@ document.querySelectorAll("[data-demo-action]").forEach((button) => {
   });
 });
 
+document.querySelectorAll("[data-analytics-event]").forEach((element) => {
+  element.addEventListener("click", () => {
+    trackEvent(element.dataset.analyticsEvent, {
+      link_label: element.dataset.analyticsLabel || element.textContent.trim(),
+      link_url: element.getAttribute("href") || null
+    });
+  });
+});
+
+document.querySelectorAll(".faq-list details").forEach((detail) => {
+  detail.addEventListener("toggle", () => {
+    if (detail.open) {
+      trackEvent("faq_open", {
+        question: detail.querySelector("summary")?.textContent.trim() || ""
+      });
+    }
+  });
+});
+
 if (window.location.hash === "#playground") {
   writeDemoStorage();
 }
 
 window.addEventListener("hashchange", () => {
+  trackAnchorView();
+
   if (window.location.hash === "#playground") {
     writeDemoStorage();
   }

@@ -4,8 +4,12 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>
-            DataSidekick — Editor visual para LocalStorage e SessionStorage
+            DataSidekick | Editor de LocalStorage e SessionStorage para Chrome
         </title>
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Rodrigo Nascimento" />
+        <meta name="application-name" content="DataSidekick" />
+        <link rel="canonical" href="https://datasidekick.site/" />
         <link
             rel="apple-touch-icon"
             sizes="180x180"
@@ -24,29 +28,124 @@
             href="/favicon-16x16.png"
         />
         <link rel="manifest" href="/site.webmanifest" />
+        <link rel="preload" as="image" href="assets/marquee.webp" />
         <meta
             name="description"
-            content="DataSidekick é uma extensão Chrome para visualizar, buscar, editar, importar e exportar LocalStorage e SessionStorage com um editor visual de JSON."
+            content="Extensão Chrome para visualizar, buscar, editar, importar e exportar LocalStorage e SessionStorage com editor visual de JSON e foco na aba atual."
         />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://datasidekick.site/" />
+        <meta property="og:site_name" content="DataSidekick" />
+        <meta property="og:locale" content="pt_BR" />
         <meta
             property="og:title"
-            content="DataSidekick — sua central de dados locais"
+            content="DataSidekick | Editor visual de LocalStorage e SessionStorage"
         />
         <meta
             property="og:description"
-            content="Editor visual moderno para LocalStorage e SessionStorage. Visualize, edite, importe e exporte dados da aba atual."
+            content="Inspecione, edite, importe e exporte dados locais do navegador diretamente no painel lateral do Chrome."
         />
-        <meta property="og:image" content="assets/marquee.png" />
+        <meta
+            property="og:image"
+            content="https://datasidekick.site/assets/marquee.png"
+        />
+        <meta property="og:image:width" content="1983" />
+        <meta property="og:image:height" content="793" />
+        <meta
+            property="og:image:alt"
+            content="Interface do DataSidekick mostrando editor visual de JSON e lista de chaves."
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+            name="twitter:title"
+            content="DataSidekick | Editor de LocalStorage e SessionStorage"
+        />
+        <meta
+            name="twitter:description"
+            content="Extensão Chrome para visualizar, editar, importar e exportar LocalStorage e SessionStorage com editor visual de JSON."
+        />
+        <meta
+            name="twitter:image"
+            content="https://datasidekick.site/assets/marquee.png"
+        />
         <meta name="theme-color" content="#0F172A" />
         <link rel="icon" href="assets/logo.png" />
         <link rel="stylesheet" href="styles.css" />
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "SoftwareApplication",
+                "name": "DataSidekick",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "Chrome",
+                "description": "Extensão Chrome para visualizar, buscar, editar, importar e exportar LocalStorage e SessionStorage com editor visual de JSON.",
+                "url": "https://datasidekick.site/",
+                "image": "https://datasidekick.site/assets/marquee.png",
+                "author": {
+                    "@type": "Person",
+                    "name": "Rodrigo Nascimento",
+                    "url": "https://github.com/rodrigocnascimento"
+                },
+                "softwareVersion": "0.1.3",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "BRL"
+                }
+            }
+        </script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("consent", "default", {
+                ad_storage: "denied",
+                analytics_storage: "denied",
+                ad_user_data: "denied",
+                ad_personalization: "denied",
+                wait_for_update: 500
+            });
+        </script>
+        <!-- Google Tag Manager -->
+        <script>
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+                var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s),
+                    dl = l != "dataLayer" ? "&l=" + l : "";
+                j.async = true;
+                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+                f.parentNode.insertBefore(j, f);
+            })(window, document, "script", "dataLayer", "GTM-WTKNTMJV");
+        </script>
+        <!-- End Google Tag Manager -->
     </head>
     <body>
+        <!-- Google Tag Manager (noscript) -->
+        <noscript
+            ><iframe
+                src="https://www.googletagmanager.com/ns.html?id=GTM-WTKNTMJV"
+                height="0"
+                width="0"
+                style="display: none; visibility: hidden"
+            ></iframe
+        ></noscript>
+        <!-- End Google Tag Manager (noscript) -->
         <div class="noise"></div>
 
         <header class="site-header">
             <a class="brand" href="#top" aria-label="DataSidekick home">
-                <img src="assets/logo.png" alt="" />
+                <picture>
+                    <source srcset="assets/logo-96.webp" type="image/webp" />
+                    <img
+                        src="assets/logo-96.png"
+                        width="34"
+                        height="34"
+                        alt=""
+                    />
+                </picture>
                 <span>DataSidekick</span>
                 <strong>v0.1.3</strong>
             </a>
@@ -83,7 +182,10 @@
                         Extensão do Chrome para desenvolvedores
                     </div>
 
-                    <h1>Sua central visual para dados locais do navegador.</h1>
+                    <h1>
+                        Editor visual de LocalStorage e SessionStorage para
+                        Chrome.
+                    </h1>
 
                     <p>
                         Visualize, busque, edite, importe e exporte dados de
@@ -97,10 +199,17 @@
                             class="button primary"
                             href="#"
                             aria-label="Instalar DataSidekick"
+                            data-analytics-event="install_click"
+                            data-analytics-label="hero_install"
                         >
                             Instalar no Chrome
                         </a>
-                        <a class="button secondary" href="#features">
+                        <a
+                            class="button secondary"
+                            href="#features"
+                            data-analytics-event="secondary_cta_click"
+                            data-analytics-label="hero_features"
+                        >
                             Ver recursos
                         </a>
                     </div>
@@ -116,10 +225,20 @@
                 </div>
 
                 <div class="hero-media">
-                    <img
-                        src="assets/marquee.png"
-                        alt="Interface do DataSidekick mostrando editor visual de JSON e lista de chaves."
-                    />
+                    <picture>
+                        <source
+                            srcset="assets/marquee.webp"
+                            type="image/webp"
+                        />
+                        <img
+                            src="assets/marquee.png"
+                            width="1983"
+                            height="793"
+                            fetchpriority="high"
+                            decoding="async"
+                            alt="Interface do DataSidekick mostrando editor visual de JSON e lista de chaves."
+                        />
+                    </picture>
                 </div>
             </section>
 
@@ -253,6 +372,56 @@ prefixo: datasidekick.demo.</code></pre>
                 </div>
             </section>
 
+            <section class="use-cases" id="use-cases">
+                <div class="section-heading compact">
+                    <span>Casos de uso</span>
+                    <h2>Para depurar dados locais sem abrir mão de contexto.</h2>
+                    <p>
+                        O DataSidekick ajuda quando o estado da aplicação está
+                        no navegador e você precisa entender, ajustar ou
+                        compartilhar esse estado com rapidez.
+                    </p>
+                </div>
+
+                <div class="use-case-grid">
+                    <article>
+                        <h3>Editar JSON no LocalStorage</h3>
+                        <p>
+                            Abra objetos aninhados em uma árvore visual, altere
+                            campos específicos e salve sem reescrever strings
+                            compactadas manualmente.
+                        </p>
+                    </article>
+
+                    <article>
+                        <h3>Inspecionar SessionStorage</h3>
+                        <p>
+                            Veja rascunhos, fluxos temporários, filtros e
+                            estados de sessão da aba atual sem misturar dados de
+                            outras origens.
+                        </p>
+                    </article>
+
+                    <article>
+                        <h3>Exportar dados locais em JSON</h3>
+                        <p>
+                            Gere backups, compartilhe cenários de teste e
+                            restaure estados conhecidos durante desenvolvimento,
+                            QA ou suporte.
+                        </p>
+                    </article>
+
+                    <article>
+                        <h3>Testar feature flags e preferências</h3>
+                        <p>
+                            Ajuste flags, temas, preferências e caches locais
+                            para validar comportamentos sem limpar todo o
+                            navegador.
+                        </p>
+                    </article>
+                </div>
+            </section>
+
             <section class="showcase">
                 <div class="showcase-copy">
                     <span>Interface</span>
@@ -269,10 +438,17 @@ prefixo: datasidekick.demo.</code></pre>
                     </ul>
                 </div>
 
-                <img
-                    src="assets/screenshot.png"
-                    alt="Screenshot do DataSidekick em tema escuro."
-                />
+                <picture>
+                    <source srcset="assets/screenshot.webp" type="image/webp" />
+                    <img
+                        src="assets/screenshot.png"
+                        width="1536"
+                        height="1024"
+                        loading="lazy"
+                        decoding="async"
+                        alt="Screenshot do DataSidekick em tema escuro."
+                    />
+                </picture>
             </section>
 
             <section class="privacy" id="privacy">
@@ -386,6 +562,54 @@ prefixo: datasidekick.demo.</code></pre>
                 </ol>
             </section>
 
+            <section class="faq" id="faq">
+                <div class="section-heading compact">
+                    <span>Perguntas frequentes</span>
+                    <h2>Dúvidas comuns antes de instalar.</h2>
+                </div>
+
+                <div class="faq-list">
+                    <details>
+                        <summary>
+                            O DataSidekick envia meus dados para servidores?
+                        </summary>
+                        <p>
+                            Não. Os dados de LocalStorage e SessionStorage são
+                            lidos e editados localmente no navegador. A
+                            extensão não envia esses dados para servidores
+                            externos.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>A extensão acessa todos os sites?</summary>
+                        <p>
+                            Não durante a instalação. Quando você abre o painel
+                            em uma página, o DataSidekick solicita permissão
+                            apenas para a origem atual.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>Posso editar objetos JSON aninhados?</summary>
+                        <p>
+                            Sim. Valores JSON válidos são exibidos como uma
+                            árvore visual editável para facilitar alterações
+                            pontuais.
+                        </p>
+                    </details>
+
+                    <details>
+                        <summary>Para quem o DataSidekick foi criado?</summary>
+                        <p>
+                            Para desenvolvedores, QAs e pessoas técnicas que
+                            precisam depurar, editar, importar ou exportar
+                            dados locais de aplicações web.
+                        </p>
+                    </details>
+                </div>
+            </section>
+
             <section class="creator" id="creator">
                 <div class="creator-card">
                     <div class="creator-profile">
@@ -410,6 +634,8 @@ prefixo: datasidekick.demo.</code></pre>
                             href="https://www.linkedin.com/in/rodrigocesarnascimento/"
                             target="_blank"
                             rel="noopener noreferrer"
+                            data-analytics-event="outbound_click"
+                            data-analytics-label="linkedin"
                         >
                             <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -426,6 +652,8 @@ prefixo: datasidekick.demo.</code></pre>
                             href="https://x.com/_whiletruedo"
                             target="_blank"
                             rel="noopener noreferrer"
+                            data-analytics-event="outbound_click"
+                            data-analytics-label="x_profile"
                         >
                             <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -442,6 +670,8 @@ prefixo: datasidekick.demo.</code></pre>
                             href="https://github.com/rodrigocnascimento/"
                             target="_blank"
                             rel="noopener noreferrer"
+                            data-analytics-event="outbound_click"
+                            data-analytics-label="github_profile"
                         >
                             <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -459,6 +689,8 @@ prefixo: datasidekick.demo.</code></pre>
                             href="https://github.com/rodrigocnascimento/datasidekick"
                             target="_blank"
                             rel="noopener noreferrer"
+                            data-analytics-event="outbound_click"
+                            data-analytics-label="github_repository"
                         >
                             <svg viewBox="0 0 24 24" aria-hidden="true">
                                 <path
@@ -487,6 +719,26 @@ prefixo: datasidekick.demo.</code></pre>
             </div>
             <a href="#top">Voltar ao topo</a>
         </footer>
+
+        <aside
+            class="consent-banner"
+            data-consent-banner
+            aria-label="Preferências de analytics"
+            hidden
+        >
+            <p>
+                Usamos analytics para entender visitas e melhorar a landing.
+                Você pode aceitar ou manter tudo desativado.
+            </p>
+            <div>
+                <button type="button" data-consent-action="deny">
+                    Manter desativado
+                </button>
+                <button type="button" data-consent-action="accept">
+                    Aceitar analytics
+                </button>
+            </div>
+        </aside>
 
         <script src="script.js"></script>
     </body>
