@@ -1,0 +1,5 @@
+{
+  "name": "datasidekick",
+  "extensions": ["*.js", "*.md", "*.json"],
+  "exclude_patterns": ["node_modules", "dist", "build", ".git", ".env", "assets/", "_locales"],
+}

@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.1.6 — Observação bidirecional do storage
+
+### Adicionado
+- Observer injetado na página que monkey-patcha `Storage.prototype` para detectar alterações externas.
+- Polling leve via contador inteiro (`__ds_revision__`) a cada 1.5s para atualizar o painel automaticamente.
+- Evento customizado `datasidekick:changed` / `datasidekick:cleared` disparado na página ao alterar dados pelo SidePanel.
+- Animação de giro (360°) no botão de refresh como feedback visual.
+
+### Alterado
+- `writeStorage`, `removeStorageKey`, `clearStorage` e `importStorage` agora disparam `CustomEvent` na página.
+- Botão de refresh gira ao ser clicado.
+- Ajuste de versão para v0.1.6.
+
 ## v0.1.5 — Internacionalização (i18n)
 
 ### Adicionado

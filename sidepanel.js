@@ -139,16 +139,81 @@ async function runInPage(fn, args = []) {
   const [{ result }] = await chrome.scripting.executeScript({ target: { tabId: state.tabId }, func: fn, args });
   return result;
 }
+function injectObserver() {
+  const script = document.createElement('script');
+  script.textContent = '(' + function mainPatch() {
+    if (window.__ds_patched) return;
+    window.__ds_patched = true;
+    window.__ds_revision__ = 0;
+    var origSet = Storage.prototype.setItem;
+    var origRemove = Storage.prototype.removeItem;
+    var origClear = Storage.prototype.clear;
+    Storage.prototype.setItem = function(k, v) {
+      origSet.call(this, k, v);
+      window.__ds_revision__++;
+      window.dispatchEvent(new CustomEvent('datasidekick:changed', { detail: { key: k, storage: this === sessionStorage ? 'sessionStorage' : 'localStorage' } }));
+    };
+    Storage.prototype.removeItem = function(k) {
+      origRemove.call(this, k);
+      window.__ds_revision__++;
+      window.dispatchEvent(new CustomEvent('datasidekick:changed', { detail: { key: k, storage: this === sessionStorage ? 'sessionStorage' : 'localStorage' } }));
+    };
+    Storage.prototype.clear = function() {
+      var s = this === sessionStorage ? 'sessionStorage' : 'localStorage';
+      origClear.call(this);
+      window.__ds_revision__++;
+      window.dispatchEvent(new CustomEvent('datasidekick:cleared', { detail: { storage: s } }));
+    };
+  } + ')()';
+  document.documentElement.appendChild(script);
+  script.remove();
+}
+
+let watchInterval = null;
+
+function startStorageWatch() {
+  if (watchInterval) return;
+  let lastRev = -1;
+  watchInterval = setInterval(async () => {
+    if (!state.tabId || state.accessBlocked) return;
+    try {
+      const rev = await runInPage(function(){ return window.__ds_revision__ || 0; });
+      if (rev !== lastRev) { lastRev = rev; refresh(); }
+    } catch {}
+  }, 1500);
+}
+
+function stopStorageWatch() {
+  if (watchInterval) { clearInterval(watchInterval); watchInterval = null; }
+}
+
 function readStorage(storageName) {
   const storage = storageName === 'sessionStorage' ? window.sessionStorage : window.localStorage;
   return Object.keys(storage).sort((a,b) => a.localeCompare(b)).map((key) => ({ key, value: storage.getItem(key) ?? '' }));
 }
-function writeStorage(storageName, key, value) { (storageName === 'sessionStorage' ? sessionStorage : localStorage).setItem(key, value); return true; }
-function removeStorageKey(storageName, key) { (storageName === 'sessionStorage' ? sessionStorage : localStorage).removeItem(key); return true; }
-function clearStorage(storageName) { (storageName === 'sessionStorage' ? sessionStorage : localStorage).clear(); return true; }
+function writeStorage(storageName, key, value) {
+  const storage = storageName === 'sessionStorage' ? sessionStorage : localStorage;
+  storage.setItem(key, value);
+  window.dispatchEvent(new CustomEvent('datasidekick:changed', { detail: { key, storage: storageName } }));
+  return true;
+}
+function removeStorageKey(storageName, key) {
+  (storageName === 'sessionStorage' ? sessionStorage : localStorage).removeItem(key);
+  window.dispatchEvent(new CustomEvent('datasidekick:changed', { detail: { key, storage: storageName } }));
+  return true;
+}
+function clearStorage(storageName) {
+  (storageName === 'sessionStorage' ? sessionStorage : localStorage).clear();
+  window.dispatchEvent(new CustomEvent('datasidekick:cleared', { detail: { storage: storageName } }));
+  return true;
+}
 function importStorage(storageName, data) {
   const storage = storageName === 'sessionStorage' ? sessionStorage : localStorage;
-  Object.entries(data).forEach(([key, value]) => storage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value, null, 2)));
+  Object.entries(data).forEach(([key, value]) => {
+    const v = typeof value === 'string' ? value : JSON.stringify(value, null, 2);
+    storage.setItem(key, v);
+    window.dispatchEvent(new CustomEvent('datasidekick:changed', { detail: { key, storage: storageName } }));
+  });
   return true;
 }
 
@@ -237,6 +302,7 @@ async function refresh() {
   try {
     await getActiveTab();
     hidePermissionState();
+    if (!window.__dsObserverInjected) { window.__dsObserverInjected = true; try { await runInPage(injectObserver); } catch {} startStorageWatch(); }
     state.entries = await runInPage(readStorage, [state.storage]);
     if (state.selectedKey && !state.entries.some(e => e.key === state.selectedKey)) clearSelection();
     renderList();
@@ -418,7 +484,7 @@ async function deleteKey(key = state.selectedKey) {
 }
 async function exportData() {
   const data = Object.fromEntries(state.entries.map(e => [e.key, e.value]));
-  const payload = { app: 'DataSidekick', version: '0.1.5', origin: state.origin, storage: state.storage, exportedAt: new Date().toISOString(), items: data };
+  const payload = { app: 'DataSidekick', version: '0.1.6', origin: state.origin, storage: state.storage, exportedAt: new Date().toISOString(), items: data };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `datasidekick-${state.storage}-${Date.now()}.json`; a.click(); URL.revokeObjectURL(url); toast(t('dataExported'));
 }
@@ -472,7 +538,7 @@ function bindEvents() {
     else if (e.key === 'Escape' && state.helpOpen) closeHelp();
   });
   $$('.switch-btn').forEach(btn => btn.addEventListener('click', async () => { $$('.switch-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.storage = btn.dataset.storage; clearSelection(); await refresh(); }));
-  $('#refreshBtn').onclick = refresh; $('#saveBtn').onclick = saveSelected; $('#resetBtn').onclick = () => selectKey(state.selectedKey); $('#deleteKeyBtn').onclick = () => deleteKey(); $('#exportBtn').onclick = exportData; $('#importInput').onchange = e => handleImport(e.target.files[0]); $('#clearAllBtn').onclick = clearAll;
+  $('#refreshBtn').onclick = () => { $('#refreshBtn').classList.add('refresh-btn-spinning'); setTimeout(() => $('#refreshBtn').classList.remove('refresh-btn-spinning'), 400); refresh(); }; $('#saveBtn').onclick = saveSelected; $('#resetBtn').onclick = () => selectKey(state.selectedKey); $('#deleteKeyBtn').onclick = () => deleteKey(); $('#exportBtn').onclick = exportData; $('#importInput').onchange = e => handleImport(e.target.files[0]); $('#clearAllBtn').onclick = clearAll;
   $('#settingsBtn').onclick = toggleSettings;
   $('#closeSettingsBtn').onclick = closeSettings;
   els.settingsBackdrop?.addEventListener('click', closeSettings);
