@@ -53,6 +53,7 @@
 
             <nav class="nav" aria-label="Navegação principal">
                 <a href="#features">Recursos</a>
+                <a href="#playground">Playground</a>
                 <a href="#privacy">Privacidade</a>
                 <a href="#how-it-works">Como funciona</a>
                 <a class="nav-cta" href="#install">Instalar</a>
@@ -133,6 +134,56 @@
                     </p>
                 </div>
                 <div class="purpose-badge">Chrome Side Panel</div>
+            </section>
+
+            <section class="playground" id="playground">
+                <div class="playground-copy">
+                    <span>Playground</span>
+                    <h2>Teste o DataSidekick com dados reais de demonstração.</h2>
+                    <p>
+                        Esta página pode criar exemplos complexos em
+                        <strong>localStorage</strong> e
+                        <strong>sessionStorage</strong> para você abrir o
+                        painel lateral e explorar a extensão em uma origem
+                        segura.
+                    </p>
+
+                    <div class="playground-actions">
+                        <button
+                            class="button primary"
+                            type="button"
+                            data-demo-action="seed"
+                        >
+                            Criar dados demo
+                        </button>
+                        <button
+                            class="button secondary"
+                            type="button"
+                            data-demo-action="clear"
+                        >
+                            Limpar dados demo
+                        </button>
+                    </div>
+
+                    <p class="playground-status" data-demo-status>
+                        Abra o console ou use os botões para preparar esta
+                        origem.
+                    </p>
+                </div>
+
+                <div class="console-panel" aria-label="Instruções do console">
+                    <div class="console-topbar">
+                        <span></span><span></span><span></span>
+                    </div>
+                    <pre><code>DataSidekick demo
+
+1. Clique em "Criar dados demo".
+2. Abra o painel lateral do DataSidekick.
+3. Compare LocalStorage e SessionStorage.
+4. Edite JSON, exporte, importe e limpe chaves.
+
+prefixo: datasidekick.demo.</code></pre>
+                </div>
             </section>
 
             <section class="features" id="features">
@@ -256,6 +307,48 @@
                         </p>
                     </div>
                 </div>
+
+                <article class="privacy-detail" id="access-control">
+                    <div>
+                        <h3>Como o DataSidekick acessa seus dados</h3>
+                        <p>
+                            O DataSidekick não solicita acesso permanente a
+                            todos os sites durante a instalação.
+                        </p>
+                        <p>
+                            Quando você abre o painel em uma página, a extensão
+                            identifica a origem atual, por exemplo
+                            <code>localhost:3000</code> ou
+                            <code>app.example.com</code>. Para ler e editar
+                            <code>localStorage</code> e
+                            <code>sessionStorage</code>, o DataSidekick
+                            solicita permissão apenas para aquela origem.
+                        </p>
+                    </div>
+
+                    <div>
+                        <p>Esse acesso é usado somente para:</p>
+                        <ul>
+                            <li>
+                                listar chaves do LocalStorage e SessionStorage;
+                            </li>
+                            <li>exibir valores no painel lateral;</li>
+                            <li>
+                                editar valores quando você salva alterações;
+                            </li>
+                            <li>importar ou exportar dados em JSON;</li>
+                            <li>
+                                excluir chaves quando você confirma a ação.
+                            </li>
+                        </ul>
+                        <p>
+                            O DataSidekick não envia seus dados para servidores
+                            externos, não usa código remoto e não compartilha
+                            dados com terceiros. Tudo acontece localmente no
+                            navegador.
+                        </p>
+                    </div>
+                </article>
             </section>
 
             <section class="steps" id="how-it-works">
