@@ -1,5 +1,19 @@
 # Changelog
 
+# v0.1.4 — Settings overlay
+
+- Settings agora abre fechada por padrão.
+- Painel de configurações abre como overlay sobre a interface, sem espremer sidebar/editor.
+- Adicionado backdrop com clique fora para fechar.
+- Adicionado fechamento por `Esc`.
+- Toggles refinados e mais compactos.
+- Texto de foco simplificado para melhorar legibilidade.
+- Adicionado painel de ajuda com instruções de uso, edição, importação/exportação e privacidade.
+- Corrigido botão do GitHub para abrir o repositório do projeto em uma nova aba.
+- Substituída a permissão ampla de host por permissões opcionais por origem `http`/`https`.
+- Adicionado estado de permissão para solicitar acesso apenas ao site atual.
+- Adicionada abertura do playground do DataSidekick na primeira instalação.
+
 ## v0.1.3
 
 ### Adicionado

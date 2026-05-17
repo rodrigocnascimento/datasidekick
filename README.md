@@ -117,16 +117,16 @@ O DataSidekick utiliza permissões de extensão do Chrome para fornecer sua func
 
 ## Versão
 
-Versão atual: `v0.1.3`
+Versão atual: `v0.1.4`
 
 Consulte o arquivo [CHANGELOG.md](./CHANGELOG.md) para obter as notas de lançamento.
 
 ## Links do projeto
 
-- Repositório: https://github.com/rodrigocesarnascimento/datasidekick
+- Repositório: https://github.com/rodrigocnascimento/datasidekick
 - LinkedIn: https://www.linkedin.com/in/rodrigocesarnascimento/
 - Twitter / X: https://x.com/_whiletruedo
-- GitHub: https://github.com/rodrigocesarnascimento/
+- GitHub: https://github.com/rodrigocnascimento/
 
 ## Autor
 
