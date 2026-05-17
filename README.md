@@ -2,6 +2,8 @@
 
 Landing page simples para apresentar o DataSidekick.
 
+![O DataSidekick é uma extensão do Chrome para desenvolvedores](assets/marquee.png)
+
 A página explica rapidamente o propósito da extensão, seus principais recursos, funcionamento básico, privacidade e links do projeto.
 
 ## Estrutura
@@ -50,10 +52,21 @@ A página é 100% estática e pode ser publicada em:
 
 ## Versão
 
-Landing page da versão `v0.1.3`.
+Versão atual: `v0.1.4`
 
 ## Projeto
 
 Repositório principal:
 
-https://github.com/rodrigocnascimento/datasidekick
+- Repositório: https://github.com/rodrigocnascimento/datasidekick
+- LinkedIn: https://www.linkedin.com/in/rodrigocesarnascimento/
+- Twitter / X: https://x.com/_whiletruedo
+- GitHub: https://github.com/rodrigocnascimento/
+
+## Autor
+
+Criado por **Rodrigo Nascimento**.
+
+## Licença
+
+MIT
