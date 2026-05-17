@@ -25,7 +25,9 @@ const icons = {
   sun: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>',
   x: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>',
   help: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 1 1 5.8 1c-.6 1.4-2.9 1.6-2.9 3.5"/><path d="M12 17h.01"/></svg>',
-  github: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 .1.6 2.6 3.4 1.9.1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.2 11.2 0 0 1 6 0C16 5.7 17 6 17 6c.6 1.6.2 2.9.1 3.2.8.9 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>'
+  github: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.4-4-1.4-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 .1.6 2.6 3.4 1.9.1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.2 11.2 0 0 1 6 0C16 5.7 17 6 17 6c.6 1.6.2 2.9.1 3.2.8.9 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1.1.9 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5Z"/></svg>',
+  lock: '<svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v2"/></svg>',
+  unlock: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 7.3-2.2"/><path d="M12 14v2"/></svg>'
 };
 
 function hydrateIcons() {
@@ -43,18 +45,20 @@ const els = {
   workspace: $('.workspace'), keyList: $('#keyList'), searchInput: $('#searchInput'), countLabel: $('#countLabel'),
   selectedKeyTitle: $('#selectedKeyTitle'), selectedTypeBadge: $('#selectedTypeBadge'), selectedSize: $('#selectedSize'),
   emptyState: $('#emptyState'), editorView: $('#editorView'), primitiveEditor: $('#primitiveEditor'), primitiveInput: $('#primitiveInput'),
-  jsonEditor: $('#jsonEditor'), saveBtn: $('#saveBtn'), statusBar: $('#statusBar'), settingsPanel: $('#settingsPanel'),
+  jsonEditor: $('#jsonEditor'), saveBtn: $('#saveBtn'), statusBar: $('#statusBar'), settingsPanel: $('#settingsPanel'), settingsBackdrop: $('#settingsBackdrop'),
+  helpPanel: $('#helpPanel'), helpBackdrop: $('#helpBackdrop'),
+  permissionState: $('#permissionState'), permissionHost: $('#permissionHost'), grantAccessBtn: $('#grantAccessBtn'),
   summaryStorage: $('#summaryStorage'), summaryItems: $('#summaryItems'), summarySize: $('#summarySize')
 };
 
 let appSettings = {
-  theme: 'dark', fontSize: 14, showSizes: true, confirmDelete: true, settingsOpen: true,
+  theme: 'dark', fontSize: 14, showSizes: true, confirmDelete: true, settingsOpen: false,
   currentOriginOnly: true, hideNoisy: true, hiddenKeys: {}, favorites: {}
 };
 
 let state = {
   tabId: null, tabUrl: '', origin: '', host: '', storage: 'localStorage', entries: [], selectedKey: null, selectedRaw: '', working: null,
-  isJson: false, dirty: false, collapsed: new Set(), pendingDelete: null
+  isJson: false, dirty: false, collapsed: new Set(), pendingDelete: null, accessBlocked: false, helpOpen: false
 };
 
 function loadSettings() {
@@ -74,7 +78,12 @@ function applySettings() {
   $('#hideNoisyToggle')?.classList.toggle('on', appSettings.hideNoisy);
   updateOriginUI();
   els.settingsPanel.classList.toggle('hidden', !appSettings.settingsOpen);
-  els.workspace.classList.toggle('settings-closed', !appSettings.settingsOpen);
+  els.settingsBackdrop?.classList.toggle('hidden', !appSettings.settingsOpen);
+  els.workspace.classList.toggle('settings-open', appSettings.settingsOpen);
+  $('#settingsBtn')?.classList.toggle('active', appSettings.settingsOpen);
+  els.helpPanel?.classList.toggle('hidden', !state.helpOpen);
+  els.helpBackdrop?.classList.toggle('hidden', !state.helpOpen);
+  $('#helpBtn')?.classList.toggle('active', state.helpOpen);
   renderList();
 }
 
@@ -85,6 +94,41 @@ async function getActiveTab() {
   state.tabUrl = tab.url || '';
   try { const u = new URL(state.tabUrl); state.origin = u.origin; state.host = u.host; } catch { state.origin = ''; state.host = 'Origem indisponível'; }
   updateOriginUI();
+}
+function getOriginPattern() {
+  if (!state.tabUrl) throw new Error('Aba ativa indisponível.');
+  const url = new URL(state.tabUrl);
+  if (!['http:', 'https:'].includes(url.protocol)) {
+    throw new Error('Esta página não permite acesso ao storage. Use uma página http ou https.');
+  }
+  return `${url.protocol}//${url.host}/*`;
+}
+function showPermissionState(message) {
+  state.accessBlocked = true;
+  state.entries = [];
+  clearSelection(false);
+  els.permissionHost.textContent = displayOrigin();
+  els.permissionState?.classList.remove('hidden');
+  els.emptyState?.classList.add('hidden');
+  els.editorView?.classList.add('hidden');
+  els.keyList.innerHTML = '<div class="empty-state" style="min-height:180px"><h2>Acesso pendente</h2><p>Permita o acesso a este site para listar os dados.</p></div>';
+  els.countLabel.textContent = 'Permissão necessária';
+  updateSummary([]);
+  if (message) els.permissionState.querySelector('p').textContent = message;
+}
+function hidePermissionState() {
+  state.accessBlocked = false;
+  els.permissionState?.classList.add('hidden');
+}
+function isPermissionError(error) {
+  const msg = String(error?.message || error || '').toLowerCase();
+  return msg.includes('cannot access') || msg.includes('permission') || msg.includes('host') || msg.includes('access contents') || msg.includes('extensions gallery') || msg.includes('chrome://');
+}
+async function requestOriginPermission() {
+  const originPattern = getOriginPattern();
+  const granted = await chrome.permissions.request({ origins: [originPattern] });
+  if (!granted) throw new Error(`Permissão negada para acessar ${displayOrigin()}.`);
+  return true;
 }
 async function runInPage(fn, args = []) {
   if (!state.tabId) await getActiveTab();
@@ -183,11 +227,18 @@ function currentRawValue() { return state.isJson ? JSON.stringify(state.working,
 async function refresh() {
   try {
     await getActiveTab();
+    hidePermissionState();
     state.entries = await runInPage(readStorage, [state.storage]);
     if (state.selectedKey && !state.entries.some(e => e.key === state.selectedKey)) clearSelection();
     renderList();
     if (state.selectedKey) selectKey(state.selectedKey, false);
-  } catch (e) { toast('Não foi possível acessar o storage desta página.', 'error'); }
+  } catch (e) {
+    if (isPermissionError(e)) {
+      showPermissionState(`Para visualizar e editar LocalStorage e SessionStorage de ${displayOrigin()}, permita o acesso a este site.`);
+      return;
+    }
+    toast(e.message || 'Não foi possível acessar o storage desta página.', 'error');
+  }
 }
 function filteredEntries() {
   const q = els.searchInput.value.trim().toLowerCase();
@@ -230,9 +281,9 @@ function renderList() {
     els.keyList.appendChild(item);
   }
 }
-function clearSelection() {
+function clearSelection(showEmpty = true) {
   state.selectedKey = null; state.selectedRaw = ''; state.working = null; state.isJson = false; state.collapsed.clear(); state.pendingDelete = null;
-  els.emptyState.classList.remove('hidden'); els.editorView.classList.add('hidden'); setDirty(false); renderList();
+  els.emptyState.classList.toggle('hidden', !showEmpty); els.editorView.classList.add('hidden'); setDirty(false); renderList();
 }
 function selectKey(key, render = true) {
   const entry = state.entries.find(e => e.key === key); if (!entry) return;
@@ -242,6 +293,7 @@ function selectKey(key, render = true) {
   const parsed = parseValue(entry.value);
   state.isJson = parsed.ok && typeof parsed.value === 'object' && parsed.value !== null;
   state.working = state.isJson ? structuredClone(parsed.value) : entry.value;
+  hidePermissionState();
   els.emptyState.classList.add('hidden'); els.editorView.classList.remove('hidden');
   els.primitiveEditor.classList.toggle('hidden', state.isJson); els.jsonEditor.classList.toggle('hidden', !state.isJson);
   if (state.isJson) renderJsonEditor(); else els.primitiveInput.value = entry.value;
@@ -349,7 +401,7 @@ async function deleteKey(key = state.selectedKey) {
 }
 async function exportData() {
   const data = Object.fromEntries(state.entries.map(e => [e.key, e.value]));
-  const payload = { app: 'DataSidekick', version: '0.1.3', origin: state.origin, storage: state.storage, exportedAt: new Date().toISOString(), items: data };
+  const payload = { app: 'DataSidekick', version: '0.1.4', origin: state.origin, storage: state.storage, exportedAt: new Date().toISOString(), items: data };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `datasidekick-${state.storage}-${Date.now()}.json`; a.click(); URL.revokeObjectURL(url); toast('Dados exportados');
 }
@@ -363,17 +415,57 @@ async function clearAll() {
   await runInPage(clearStorage, [state.storage]); toast('Storage limpo'); await refresh(); clearSelection();
 }
 
+function openSettings() {
+  state.helpOpen = false;
+  appSettings.settingsOpen = true;
+  saveSettings();
+}
+
+function closeSettings() {
+  appSettings.settingsOpen = false;
+  saveSettings();
+}
+
+function toggleSettings() {
+  appSettings.settingsOpen ? closeSettings() : openSettings();
+}
+
+function openHelp() {
+  appSettings.settingsOpen = false;
+  state.helpOpen = true;
+  saveSettings();
+}
+
+function closeHelp() {
+  state.helpOpen = false;
+  applySettings();
+}
+
+function toggleHelp() {
+  state.helpOpen ? closeHelp() : openHelp();
+}
+
 function bindEvents() {
   els.primitiveInput.addEventListener('input', () => setDirty(els.primitiveInput.value !== state.selectedRaw));
   els.searchInput.addEventListener('input', renderList);
   document.addEventListener('keydown', (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); els.searchInput.focus(); }
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 's') { e.preventDefault(); saveSelected(); }
+    if (e.key === 'Escape' && appSettings.settingsOpen) closeSettings();
+    else if (e.key === 'Escape' && state.helpOpen) closeHelp();
   });
   $$('.switch-btn').forEach(btn => btn.addEventListener('click', async () => { $$('.switch-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); state.storage = btn.dataset.storage; clearSelection(); await refresh(); }));
   $('#refreshBtn').onclick = refresh; $('#saveBtn').onclick = saveSelected; $('#resetBtn').onclick = () => selectKey(state.selectedKey); $('#deleteKeyBtn').onclick = () => deleteKey(); $('#exportBtn').onclick = exportData; $('#importInput').onchange = e => handleImport(e.target.files[0]); $('#clearAllBtn').onclick = clearAll;
-  $('#settingsBtn').onclick = () => { appSettings.settingsOpen = !appSettings.settingsOpen; saveSettings(); };
-  $('#closeSettingsBtn').onclick = () => { appSettings.settingsOpen = false; saveSettings(); };
+  $('#settingsBtn').onclick = toggleSettings;
+  $('#closeSettingsBtn').onclick = closeSettings;
+  els.settingsBackdrop?.addEventListener('click', closeSettings);
+  $('#helpBtn').onclick = toggleHelp;
+  $('#closeHelpBtn').onclick = closeHelp;
+  els.helpBackdrop?.addEventListener('click', closeHelp);
+  $('#githubBtn').onclick = () => {
+    chrome.tabs.create({ url: 'https://github.com/rodrigocnascimento/datasidekick' })
+      .catch(() => toast('Não foi possível abrir o GitHub.', 'error'));
+  };
   $('#darkModeBtn').onclick = () => { appSettings.theme = 'dark'; saveSettings(); };
   $('#lightModeBtn').onclick = () => { appSettings.theme = 'light'; saveSettings(); };
   $('#fontDecBtn').onclick = () => { appSettings.fontSize = Math.max(11, appSettings.fontSize - 1); saveSettings(); };
@@ -384,6 +476,19 @@ function bindEvents() {
   $('#hideNoisyToggle').onclick = () => { appSettings.hideNoisy = !appSettings.hideNoisy; saveSettings(); renderList(); };
   $('#resetHiddenBtn').onclick = resetHiddenForScope;
   $('#railSearchBtn').onclick = () => els.searchInput.focus();
+  $('#grantAccessBtn')?.addEventListener('click', async () => {
+    try {
+      els.grantAccessBtn.disabled = true;
+      await requestOriginPermission();
+      toast('Acesso concedido');
+      hidePermissionState();
+      await refresh();
+    } catch (e) {
+      toast(e.message || 'Não foi possível solicitar permissão.', 'error');
+    } finally {
+      els.grantAccessBtn.disabled = false;
+    }
+  });
 }
 
 hydrateIcons();
