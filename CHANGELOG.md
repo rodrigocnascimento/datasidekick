@@ -1,6 +1,16 @@
 # Changelog
 
-# v0.1.4 — Settings overlay
+## v0.1.5 — English translation
+
+### Adicionado
+- Imagens localizadas para en-US (`marquee-en.png`, `screenshot-en.png`, `small-promo-en.png`).
+- Versão em inglês da landing page com imagens, metadados e conteúdo traduzidos.
+
+### Alterado
+- Página `en/index.html` atualizada com imagens e metadados em inglês.
+- Bump de versão para v0.1.5.
+
+## v0.1.4 — Settings overlay
 
 - Settings agora abre fechada por padrão.
 - Painel de configurações abre como overlay sobre a interface, sem espremer sidebar/editor.
