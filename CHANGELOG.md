@@ -9,6 +9,7 @@
 ### Alterado
 - Página `en/index.html` atualizada com imagens e metadados em inglês.
 - Bump de versão para v0.1.5.
+- Adicionado auto-redirect pt→en no `index.html` raiz baseado em `navigator.language`.
 
 ## v0.1.4 — Settings overlay
 

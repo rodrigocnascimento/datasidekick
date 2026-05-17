@@ -30,6 +30,15 @@
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="alternate" hreflang="en" href="https://datasidekick.site/en/" />
 
+        <script>
+            (function () {
+                var lang = navigator.language || (navigator.languages && navigator.languages[0]) || "";
+                if (lang.slice(0, 2) === "en" && location.pathname.indexOf("/en/") !== 0) {
+                    location.replace("/en/");
+                }
+            })();
+        </script>
+
         <meta
             name="description"
             content="Extensão Chrome para visualizar, buscar, editar, importar e exportar LocalStorage e SessionStorage com editor visual de JSON e foco na aba atual."
