@@ -1,3 +1,7 @@
+function t(key, ...args) {
+  return chrome.i18n.getMessage(key, args.length ? args : undefined);
+}
+
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => [...document.querySelectorAll(s)];
 
@@ -89,17 +93,17 @@ function applySettings() {
 
 async function getActiveTab() {
   const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-  if (!tab?.id) throw new Error('Nenhuma aba ativa encontrada.');
+  if (!tab?.id) throw new Error(t('noActiveTab'));
   state.tabId = tab.id;
   state.tabUrl = tab.url || '';
-  try { const u = new URL(state.tabUrl); state.origin = u.origin; state.host = u.host; } catch { state.origin = ''; state.host = 'Origem indisponível'; }
+  try { const u = new URL(state.tabUrl); state.origin = u.origin; state.host = u.host; } catch { state.origin = ''; state.host = t('originUnavailable'); }
   updateOriginUI();
 }
 function getOriginPattern() {
-  if (!state.tabUrl) throw new Error('Aba ativa indisponível.');
+  if (!state.tabUrl) throw new Error(t('noActiveTab'));
   const url = new URL(state.tabUrl);
   if (!['http:', 'https:'].includes(url.protocol)) {
-    throw new Error('Esta página não permite acesso ao storage. Use uma página http ou https.');
+    throw new Error(t('storageNotAllowed'));
   }
   return `${url.protocol}//${url.host}/*`;
 }
@@ -111,8 +115,8 @@ function showPermissionState(message) {
   els.permissionState?.classList.remove('hidden');
   els.emptyState?.classList.add('hidden');
   els.editorView?.classList.add('hidden');
-  els.keyList.innerHTML = '<div class="empty-state" style="min-height:180px"><h2>Acesso pendente</h2><p>Permita o acesso a este site para listar os dados.</p></div>';
-  els.countLabel.textContent = 'Permissão necessária';
+  els.keyList.innerHTML = `<div class="empty-state" style="min-height:180px"><h2>${t('pendingAccess')}</h2><p>${t('pendingAccessDesc')}</p></div>`;
+  els.countLabel.textContent = t('permissionRequired');
   updateSummary([]);
   if (message) els.permissionState.querySelector('p').textContent = message;
 }
@@ -127,7 +131,7 @@ function isPermissionError(error) {
 async function requestOriginPermission() {
   const originPattern = getOriginPattern();
   const granted = await chrome.permissions.request({ origins: [originPattern] });
-  if (!granted) throw new Error(`Permissão negada para acessar ${displayOrigin()}.`);
+  if (!granted) throw new Error(t('permissionDenied', displayOrigin()));
   return true;
 }
 async function runInPage(fn, args = []) {
@@ -165,7 +169,7 @@ function isFavKey(key) { return favSet().has(key); }
 function setHiddenKey(key, hidden = true) {
   const sk = scopeKey(); const set = hiddenSet(); hidden ? set.add(key) : set.delete(key);
   appSettings.hiddenKeys = { ...(appSettings.hiddenKeys || {}), [sk]: [...set] };
-  saveSettings(); renderList(); toast(hidden ? `“${key}” ocultada` : `“${key}” reexibida`);
+  saveSettings(); renderList(); toast(hidden ? t('keyHidden', key) : t('keyRestored', key));
 }
 function toggleFavorite(key) {
   const sk = scopeKey(); const set = favSet(); set.has(key) ? set.delete(key) : set.add(key);
@@ -174,31 +178,31 @@ function toggleFavorite(key) {
 }
 function resetHiddenForScope() {
   const keys = [...hiddenSet()];
-  if (!keys.length) { toast('Nenhuma key oculta nesta origem'); return; }
+  if (!keys.length) { toast(t('noHiddenKeys')); return; }
   const sk = scopeKey(); appSettings.hiddenKeys = { ...(appSettings.hiddenKeys || {}) }; delete appSettings.hiddenKeys[sk];
-  saveSettings(); renderList(); toast('Todas as keys ocultas foram reexibidas');
+  saveSettings(); renderList(); toast(t('allKeysRestored'));
 }
 function displayOrigin() {
-  if (!state.host) return 'Origem atual';
+  if (!state.host) return t('originLabel');
   try {
     const u = new URL(state.tabUrl);
     if (u.hostname === 'localhost' || u.hostname === '127.0.0.1') return u.port ? `${u.hostname}:${u.port}` : u.hostname;
     const parts = u.hostname.split('.').filter(Boolean);
     return parts.length > 2 ? parts.slice(-2).join('.') : u.hostname;
-  } catch { return state.host || 'Origem atual'; }
+  } catch { return state.host || t('originLabel'); }
 }
 function renderHiddenKeysList() {
   const list = $('#hiddenKeysList');
   if (!list) return;
   const keys = [...hiddenSet()].sort((a, b) => a.localeCompare(b));
   if (!keys.length) {
-    list.innerHTML = '<div class="hidden-empty">Nenhuma key oculta manualmente.</div>';
+    list.innerHTML = `<div class="hidden-empty">${t('noHiddenMsg')}</div>`;
     return;
   }
   list.innerHTML = keys.map(key => `
     <div class="hidden-key-row" title="${escapeHtml(key)}">
       <span>${escapeHtml(key)}</span>
-      <button class="small-outline-btn unhide-one-btn" data-key="${escapeHtml(key)}">Reexibir</button>
+      <button class="small-outline-btn unhide-one-btn" data-key="${escapeHtml(key)}">${t('restore')}</button>
     </div>`).join('');
   list.querySelectorAll('.unhide-one-btn').forEach(btn => {
     btn.onclick = () => setHiddenKey(btn.dataset.key, false);
@@ -207,9 +211,14 @@ function renderHiddenKeysList() {
 function updateOriginUI() {
   const pill = $('#originPill');
   const label = displayOrigin();
-  if (pill) { pill.textContent = label; pill.title = state.origin || state.tabUrl || 'Origem atual da aba ativa'; }
+  if (pill) { pill.textContent = label; pill.title = state.origin || state.tabUrl || t('currentOriginTitle'); }
   const count = $('#hiddenKeysCount');
-  if (count) count.textContent = `${hiddenSet().size} key${hiddenSet().size === 1 ? '' : 's'} oculta${hiddenSet().size === 1 ? '' : 's'} nesta origem`;
+  if (count) {
+    const size = hiddenSet().size;
+    const s = size === 1 ? '' : 's';
+    const ptPlural = size === 1 ? '' : 's';
+    count.textContent = t('hiddenKeysCount', [String(size), s, ptPlural]);
+  }
   renderHiddenKeysList();
 }
 
@@ -220,8 +229,8 @@ function bytes(str) { return new Blob([str]).size; }
 function formatBytes(n) { if (n < 1024) return `${n} B`; if (n < 1024*1024) return `${(n/1024).toFixed(1)} KB`; return `${(n/1024/1024).toFixed(1)} MB`; }
 function escapeHtml(str) { return String(str).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
 function highlight(text, q) { if (!q) return escapeHtml(text); const re = new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'ig'); return escapeHtml(text).replace(re, '<mark>$1</mark>'); }
-function toast(message, type = 'ok') { const el = document.createElement('div'); el.className = `toast ${type === 'error' ? 'error' : ''}`; el.innerHTML = `${type === 'error' ? icons.x : '<span style="color:var(--success)">✓</span>'}<strong>${escapeHtml(message)}</strong>`; $('#toastHost').appendChild(el); setTimeout(() => el.remove(), 2600); }
-function setDirty(v) { state.dirty = v; els.saveBtn.disabled = !v; els.statusBar.textContent = v ? 'Alterações pendentes' : ''; }
+function toast(message, type = 'ok') { const el = document.createElement('div'); el.className = `toast ${type === 'error' ? 'error' : ''}`; el.innerHTML = `${type === 'error' ? icons.x : '<span style="color:var(--success)">\u2713</span>'}<strong>${escapeHtml(message)}</strong>`; $('#toastHost').appendChild(el); setTimeout(() => el.remove(), 2600); }
+function setDirty(v) { state.dirty = v; els.saveBtn.disabled = !v; els.statusBar.textContent = v ? t('unsavedChanges') : ''; }
 function currentRawValue() { return state.isJson ? JSON.stringify(state.working, null, 2) : els.primitiveInput.value; }
 
 async function refresh() {
@@ -234,10 +243,10 @@ async function refresh() {
     if (state.selectedKey) selectKey(state.selectedKey, false);
   } catch (e) {
     if (isPermissionError(e)) {
-      showPermissionState(`Para visualizar e editar LocalStorage e SessionStorage de ${displayOrigin()}, permita o acesso a este site.`);
+      showPermissionState(t('permissionDesc'));
       return;
     }
-    toast(e.message || 'Não foi possível acessar o storage desta página.', 'error');
+    toast(e.message || t('storageAccessError'), 'error');
   }
 }
 function filteredEntries() {
@@ -249,20 +258,28 @@ function filteredEntries() {
 }
 function updateSummary(entries = state.entries) {
   const total = entries.reduce((sum, e) => sum + bytes(e.value), 0);
-  els.summaryStorage.textContent = state.storage === 'localStorage' ? 'LocalStorage' : 'SessionStorage';
-  els.summaryItems.textContent = `${entries.length} itens`;
+  els.summaryStorage.textContent = state.storage === 'localStorage' ? t('localStorage') : t('sessionStorage');
+  els.summaryItems.textContent = t('itemsCount', [String(entries.length)]);
   els.summarySize.textContent = formatBytes(total);
 }
 function renderList() {
   if (!els.keyList) return;
   const entries = filteredEntries();
   const hiddenCount = state.entries.length - entries.length;
-  els.countLabel.textContent = `${entries.length} chave${entries.length === 1 ? '' : 's'} encontrada${entries.length === 1 ? '' : 's'}${hiddenCount ? ` · ${hiddenCount} oculta${hiddenCount === 1 ? '' : 's'}` : ''}`;
+  const count = entries.length;
+  const s = count === 1 ? '' : 's';
+  const foundS = count === 1 ? '' : 's';
+  let hiddenPart = '';
+  if (hiddenCount) {
+    const hs = hiddenCount === 1 ? '' : 's';
+    hiddenPart = t('hiddenSuffix', [String(hiddenCount), hs]);
+  }
+  els.countLabel.textContent = t('keysFound', [String(count), s, foundS, hiddenPart]);
   updateSummary(entries);
   updateOriginUI();
   els.keyList.innerHTML = '';
   if (!entries.length) {
-    els.keyList.innerHTML = '<div class="empty-state" style="min-height:180px"><h2>Nada encontrado</h2><p>Tente outra busca.</p></div>';
+    els.keyList.innerHTML = `<div class="empty-state" style="min-height:180px"><h2>${t('nothingFound')}</h2><p>${t('nothingFoundDesc')}</p></div>`;
     return;
   }
   const q = els.searchInput.value.trim();
@@ -270,11 +287,11 @@ function renderList() {
     const type = typeOfRaw(entry.value);
     const item = document.createElement('button');
     item.className = `key-item ${entry.key === state.selectedKey ? 'active' : ''}`;
-    item.innerHTML = `<div class="key-top"><span class="key-name">${isFavKey(entry.key) ? '<span class="fav-dot">★</span>' : ''}${highlight(entry.key, q)}</span><span class="key-actions"><span class="mini-action fav-action" title="Favoritar">${icons.star}</span><span class="mini-action hide-action" title="Ocultar">${icons.eyeOff}</span><span class="mini-action copy-action" title="Copiar">${icons.copy}</span><span class="mini-action del-action" title="Excluir">${icons.trash}</span></span></div><div class="key-bottom"><span class="badge ${type}">${type}</span>${appSettings.showSizes ? `<span>${formatBytes(bytes(entry.value))}</span>` : ''}</div>`;
+    item.innerHTML = `<div class="key-top"><span class="key-name">${isFavKey(entry.key) ? '<span class="fav-dot">\u2605</span>' : ''}${highlight(entry.key, q)}</span><span class="key-actions"><span class="mini-action fav-action" title="${t('favorite')}">${icons.star}</span><span class="mini-action hide-action" title="${t('hide')}">${icons.eyeOff}</span><span class="mini-action copy-action" title="${t('copy')}">${icons.copy}</span><span class="mini-action del-action" title="${t('delete')}">${icons.trash}</span></span></div><div class="key-bottom"><span class="badge ${type}">${type}</span>${appSettings.showSizes ? `<span>${formatBytes(bytes(entry.value))}</span>` : ''}</div>`;
     item.addEventListener('click', (ev) => {
       if (ev.target.closest('.fav-action')) { toggleFavorite(entry.key); return; }
       if (ev.target.closest('.hide-action')) { setHiddenKey(entry.key, true); return; }
-      if (ev.target.closest('.copy-action')) { navigator.clipboard.writeText(entry.value); toast('Valor copiado'); return; }
+      if (ev.target.closest('.copy-action')) { navigator.clipboard.writeText(entry.value); toast(t('valueCopied')); return; }
       if (ev.target.closest('.del-action')) { deleteKey(entry.key); return; }
       selectKey(entry.key);
     });
@@ -300,7 +317,7 @@ function selectKey(key, render = true) {
   setDirty(false); if (render) renderList();
 }
 
-function pathKey(path) { return path.join('¦'); }
+function pathKey(path) { return path.join('\u00a6'); }
 function getAtPath(root, path) { return path.reduce((acc, k) => acc?.[k], root); }
 function setAtPath(root, path, value) { const parent = getAtPath(root, path.slice(0,-1)); parent[path.at(-1)] = value; }
 function deleteAtPath(root, path) { const parent = getAtPath(root, path.slice(0,-1)); if (Array.isArray(parent)) parent.splice(Number(path.at(-1)), 1); else delete parent[path.at(-1)]; }
@@ -315,7 +332,7 @@ function renderJsonEditor() {
   const footer = document.createElement('div'); footer.className = 'json-footer';
   const rootType = valueType(state.working);
   if (rootType === 'array' || rootType === 'object') {
-    footer.innerHTML = `<button class="json-btn add" id="rootAddBtn">${icons.plus}Adicionar item</button><button class="json-btn danger" id="rootDeleteBtn">${icons.trash}Excluir item</button>`;
+    footer.innerHTML = `<button class="json-btn add" id="rootAddBtn">${icons.plus}${t('addItem')}</button><button class="json-btn danger" id="rootDeleteBtn">${icons.trash}${t('deleteItem')}</button>`;
     footer.querySelector('#rootAddBtn').onclick = () => addChild([]);
     footer.querySelector('#rootDeleteBtn').onclick = () => { state.working = rootType === 'array' ? [] : {}; setDirty(true); renderJsonEditor(); };
     els.jsonEditor.appendChild(footer);
@@ -327,7 +344,7 @@ function renderNode(value, path, label) {
   const row = document.createElement('div'); row.className = `node-row ${complex ? 'complex' : ''}`;
 
   if (complex) {
-    const caret = document.createElement('button'); caret.className = `caret ${collapsed ? 'collapsed' : ''}`; caret.innerHTML = icons.chevron; caret.title = collapsed ? 'Expandir' : 'Recolher';
+    const caret = document.createElement('button'); caret.className = `caret ${collapsed ? 'collapsed' : ''}`; caret.innerHTML = icons.chevron; caret.title = collapsed ? t('expand') : t('collapse');
     caret.onclick = () => { const k = pathKey(path); state.collapsed.has(k) ? state.collapsed.delete(k) : state.collapsed.add(k); renderJsonEditor(); };
     row.appendChild(caret);
     row.insertAdjacentHTML('beforeend', `<span class="type-icon">${nodeIcon(type)}</span>`);
@@ -336,7 +353,7 @@ function renderNode(value, path, label) {
   }
 
   if (path.length === 0) {
-    row.insertAdjacentHTML('beforeend', `<span class="bracket">${type === 'array' ? '[' : '{'}</span><span class="meta">${complex ? `${Object.keys(value).length} itens` : ''}</span><span></span>`);
+    row.insertAdjacentHTML('beforeend', `<span class="bracket">${type === 'array' ? '[' : '{'}</span><span class="meta">${complex ? t('metaItems', [String(Object.keys(value).length)]) : ''}</span><span></span>`);
   } else {
     const parent = getAtPath(state.working, path.slice(0,-1));
     if (Array.isArray(parent)) row.insertAdjacentHTML('beforeend', `<span class="array-index">${label}</span>`);
@@ -346,7 +363,7 @@ function renderNode(value, path, label) {
       row.appendChild(key);
     }
     row.insertAdjacentHTML('beforeend', '<span class="sep">:</span>');
-    if (complex) row.insertAdjacentHTML('beforeend', `<span class="bracket">${type === 'array' ? '[' : '{'} <span class="meta">${Object.keys(value).length} itens</span></span>`);
+    if (complex) row.insertAdjacentHTML('beforeend', `<span class="bracket">${type === 'array' ? '[' : '{'} <span class="meta">${t('metaItems', [String(Object.keys(value).length)])}</span></span>`);
   }
 
   if (!complex) {
@@ -359,10 +376,10 @@ function renderNode(value, path, label) {
 
   const actions = document.createElement('div'); actions.className = 'row-actions';
   if (complex) {
-    const add = document.createElement('button'); add.className = 'icon-mini-btn'; add.innerHTML = icons.plus; add.title = 'Adicionar'; add.onclick = () => addChild(path); actions.appendChild(add);
+    const add = document.createElement('button'); add.className = 'icon-mini-btn'; add.innerHTML = icons.plus; add.title = t('add'); add.onclick = () => addChild(path); actions.appendChild(add);
   }
   if (path.length > 0) {
-    const del = document.createElement('button'); del.className = 'icon-mini-btn danger'; del.innerHTML = icons.trash; del.title = 'Excluir'; del.onclick = () => { deleteAtPath(state.working, path); setDirty(true); renderJsonEditor(); }; actions.appendChild(del);
+    const del = document.createElement('button'); del.className = 'icon-mini-btn danger'; del.innerHTML = icons.trash; del.title = t('delete'); del.onclick = () => { deleteAtPath(state.working, path); setDirty(true); renderJsonEditor(); }; actions.appendChild(del);
   } else if (complex) {
     const spacer = document.createElement('span'); spacer.style.width = '30px'; actions.appendChild(spacer);
   }
@@ -371,17 +388,17 @@ function renderNode(value, path, label) {
   if (complex && !collapsed) {
     const entries = Array.isArray(value) ? value.map((v,i) => [i, v]) : Object.entries(value);
     for (const [k,v] of entries) wrapper.appendChild(renderNode(v, [...path, k], String(k)));
-    const close = document.createElement('div'); close.className = 'node-row'; close.innerHTML = `<span></span><span></span><span></span><span></span><span class="bracket">${type === 'array' ? ']' : '}'}</span><span></span>`; wrapper.appendChild(close);
+    const close = document.createElement('div'); close.className = 'node-row'; close.innerHTML = '<span></span><span></span><span></span><span></span><span class="bracket">' + (type === 'array' ? ']' : '}') + '</span><span></span>'; wrapper.appendChild(close);
   }
   return wrapper;
 }
 function addChild(path) {
   const target = getAtPath(state.working, path);
-  const type = prompt('Tipo: string, number, boolean, object, array, null', 'string') || 'string';
+  const type = prompt(t('typePrompt'), 'string') || 'string';
   const value = defaultValue(type);
   if (Array.isArray(target)) target.push(value);
   else {
-    const key = prompt('Nome da nova chave:');
+    const key = prompt(t('newKeyPrompt'));
     if (!key) return;
     target[key] = value;
   }
@@ -392,27 +409,27 @@ async function saveSelected() {
   if (!state.selectedKey) return;
   const value = currentRawValue();
   await runInPage(writeStorage, [state.storage, state.selectedKey, value]);
-  toast('JSON salvo com sucesso!'); await refresh(); selectKey(state.selectedKey); setDirty(false);
+  toast(t('savedSuccess')); await refresh(); selectKey(state.selectedKey); setDirty(false);
 }
 async function deleteKey(key = state.selectedKey) {
   if (!key) return;
-  if (appSettings.confirmDelete && state.pendingDelete !== key) { state.pendingDelete = key; toast(`Clique novamente para excluir “${key}”`); setTimeout(() => { if (state.pendingDelete === key) state.pendingDelete = null; }, 3500); return; }
-  await runInPage(removeStorageKey, [state.storage, key]); toast('Key removida'); await refresh(); if (key === state.selectedKey) clearSelection();
+  if (appSettings.confirmDelete && state.pendingDelete !== key) { state.pendingDelete = key; toast(t('confirmDelete', key)); setTimeout(() => { if (state.pendingDelete === key) state.pendingDelete = null; }, 3500); return; }
+  await runInPage(removeStorageKey, [state.storage, key]); toast(t('keyRemoved')); await refresh(); if (key === state.selectedKey) clearSelection();
 }
 async function exportData() {
   const data = Object.fromEntries(state.entries.map(e => [e.key, e.value]));
-  const payload = { app: 'DataSidekick', version: '0.1.4', origin: state.origin, storage: state.storage, exportedAt: new Date().toISOString(), items: data };
+  const payload = { app: 'DataSidekick', version: '0.1.5', origin: state.origin, storage: state.storage, exportedAt: new Date().toISOString(), items: data };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `datasidekick-${state.storage}-${Date.now()}.json`; a.click(); URL.revokeObjectURL(url); toast('Dados exportados');
+  const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `datasidekick-${state.storage}-${Date.now()}.json`; a.click(); URL.revokeObjectURL(url); toast(t('dataExported'));
 }
 async function handleImport(file) {
   if (!file) return;
-  try { const json = JSON.parse(await file.text()); const data = json.items && typeof json.items === 'object' ? json.items : json; await runInPage(importStorage, [state.storage, data]); toast('Dados importados'); await refresh(); }
-  catch { toast('Arquivo JSON inválido', 'error'); }
+  try { const json = JSON.parse(await file.text()); const data = json.items && typeof json.items === 'object' ? json.items : json; await runInPage(importStorage, [state.storage, data]); toast(t('dataImported')); await refresh(); }
+  catch { toast(t('invalidJson'), 'error'); }
 }
 async function clearAll() {
-  if (appSettings.confirmDelete && state.pendingDelete !== '__all__') { state.pendingDelete = '__all__'; toast('Clique em “Limpar tudo” novamente para confirmar'); setTimeout(() => { if (state.pendingDelete === '__all__') state.pendingDelete = null; }, 3500); return; }
-  await runInPage(clearStorage, [state.storage]); toast('Storage limpo'); await refresh(); clearSelection();
+  if (appSettings.confirmDelete && state.pendingDelete !== '__all__') { state.pendingDelete = '__all__'; toast(t('confirmClearAll')); setTimeout(() => { if (state.pendingDelete === '__all__') state.pendingDelete = null; }, 3500); return; }
+  await runInPage(clearStorage, [state.storage]); toast(t('storageCleared')); await refresh(); clearSelection();
 }
 
 function openSettings() {
@@ -464,7 +481,7 @@ function bindEvents() {
   els.helpBackdrop?.addEventListener('click', closeHelp);
   $('#githubBtn').onclick = () => {
     chrome.tabs.create({ url: 'https://github.com/rodrigocnascimento/datasidekick' })
-      .catch(() => toast('Não foi possível abrir o GitHub.', 'error'));
+      .catch(() => toast(t('githubError'), 'error'));
   };
   $('#darkModeBtn').onclick = () => { appSettings.theme = 'dark'; saveSettings(); };
   $('#lightModeBtn').onclick = () => { appSettings.theme = 'light'; saveSettings(); };
@@ -472,7 +489,7 @@ function bindEvents() {
   $('#fontIncBtn').onclick = () => { appSettings.fontSize = Math.min(20, appSettings.fontSize + 1); saveSettings(); };
   $('#showSizesToggle').onclick = () => { appSettings.showSizes = !appSettings.showSizes; saveSettings(); };
   $('#confirmToggle').onclick = () => { appSettings.confirmDelete = !appSettings.confirmDelete; saveSettings(); };
-  $('#currentOriginToggle').onclick = () => { appSettings.currentOriginOnly = !appSettings.currentOriginOnly; saveSettings(); toast('Leitura continua focada na aba ativa por segurança'); };
+  $('#currentOriginToggle').onclick = () => { appSettings.currentOriginOnly = !appSettings.currentOriginOnly; saveSettings(); toast(t('readingStaysFocused')); };
   $('#hideNoisyToggle').onclick = () => { appSettings.hideNoisy = !appSettings.hideNoisy; saveSettings(); renderList(); };
   $('#resetHiddenBtn').onclick = resetHiddenForScope;
   $('#railSearchBtn').onclick = () => els.searchInput.focus();
@@ -480,11 +497,11 @@ function bindEvents() {
     try {
       els.grantAccessBtn.disabled = true;
       await requestOriginPermission();
-      toast('Acesso concedido');
+      toast(t('accessGranted'));
       hidePermissionState();
       await refresh();
     } catch (e) {
-      toast(e.message || 'Não foi possível solicitar permissão.', 'error');
+      toast(e.message || t('permissionError'), 'error');
     } finally {
       els.grantAccessBtn.disabled = false;
     }

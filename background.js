@@ -5,9 +5,12 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.runtime.onInstalled.addListener(({ reason }) => {
   if (reason !== "install") return;
 
-  chrome.tabs.create({
-    url: "https://datasidekick.site/#playground"
-  }).catch((error) => {
-    console.warn("Não foi possível abrir o playground:", error);
+  const locale = chrome.i18n.getMessage("@@ui_locale");
+  const url = locale && locale.startsWith("en")
+    ? "https://datasidekick.site/en/#playground"
+    : "https://datasidekick.site/#playground";
+
+  chrome.tabs.create({ url }).catch((error) => {
+    console.warn("Could not open playground:", error);
   });
 });

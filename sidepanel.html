@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-BR">
+<html>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,36 +8,36 @@
 </head>
 <body>
   <div class="app-shell">
-    <nav class="rail" aria-label="Navegação">
+    <nav class="rail" aria-label="__MSG_navLabel__">
       <div class="rail-logo" id="appLogo"></div>
-      <button class="rail-btn active" id="railDataBtn" title="Dados" aria-label="Dados"></button>
-      <button class="rail-btn" id="railSearchBtn" title="Buscar" aria-label="Buscar"></button>
+      <button class="rail-btn active" id="railDataBtn" title="__MSG_dataLabel__" aria-label="__MSG_dataLabel__"></button>
+      <button class="rail-btn" id="railSearchBtn" title="__MSG_searchLabel__" aria-label="__MSG_searchLabel__"></button>
       <div class="rail-spacer"></div>
-      <button class="rail-btn" id="helpBtn" title="Ajuda" aria-label="Ajuda"></button>
-      <button class="rail-btn" id="githubBtn" title="GitHub" aria-label="Abrir GitHub"></button>
+      <button class="rail-btn" id="helpBtn" title="__MSG_helpLabel__" aria-label="__MSG_helpLabel__"></button>
+      <button class="rail-btn" id="githubBtn" title="__MSG_githubLabel__" aria-label="__MSG_githubLabel__"></button>
     </nav>
 
     <div class="main-shell">
       <header class="topbar">
         <div class="brand">
           <h1>DataSidekick</h1>
-          <span class="version">v0.1.4</span>
-          <span id="originPill" class="origin-pill" title="Origem atual">...</span>
+          <span class="version">v0.1.5</span>
+          <span id="originPill" class="origin-pill" title="__MSG_currentOriginTitle__">...</span>
         </div>
 
-        <section class="storage-switch" role="tablist" aria-label="Origem dos dados">
-          <button class="switch-btn active" data-storage="localStorage"><span class="btn-icon" data-icon="database"></span>LocalStorage</button>
-          <button class="switch-btn" data-storage="sessionStorage"><span class="btn-icon" data-icon="cube"></span>SessionStorage</button>
+        <section class="storage-switch" role="tablist" aria-label="__MSG_dataSourceLabel__">
+          <button class="switch-btn active" data-storage="localStorage"><span class="btn-icon" data-icon="database"></span>__MSG_localStorage__</button>
+          <button class="switch-btn" data-storage="sessionStorage"><span class="btn-icon" data-icon="cube"></span>__MSG_sessionStorage__</button>
         </section>
 
         <div class="top-actions">
-          <label class="top-action file-btn" title="Importar JSON" aria-label="Importar JSON">
+          <label class="top-action file-btn" title="__MSG_importJson__" aria-label="__MSG_importJson__">
             <input id="importInput" type="file" accept="application/json,.json" />
-            <span class="btn-icon" data-icon="upload"></span><span>Importar</span>
+            <span class="btn-icon" data-icon="upload"></span><span>__MSG_import___</span>
           </label>
-          <button id="exportBtn" class="top-action" title="Exportar JSON"><span class="btn-icon" data-icon="download"></span><span>Exportar</span></button>
-          <button id="settingsBtn" class="square-action" title="Configurações" aria-label="Configurações"><span class="btn-icon" data-icon="settings"></span></button>
-          <button id="clearAllBtn" class="top-action danger-link" title="Limpar tudo"><span class="btn-icon" data-icon="trash"></span><span>Limpar tudo</span></button>
+          <button id="exportBtn" class="top-action" title="__MSG_exportJson__"><span class="btn-icon" data-icon="download"></span><span>__MSG_export___</span></button>
+          <button id="settingsBtn" class="square-action" title="__MSG_settings__" aria-label="__MSG_settings__"><span class="btn-icon" data-icon="settings"></span></button>
+          <button id="clearAllBtn" class="top-action danger-link" title="__MSG_clearAll__"><span class="btn-icon" data-icon="trash"></span><span>__MSG_clearAll__</span></button>
         </div>
       </header>
 
@@ -45,17 +45,17 @@
         <aside class="sidebar">
           <div class="search-wrap">
             <span class="search-icon" data-icon="search"></span>
-            <input id="searchInput" placeholder="Buscar chave ou valor..." autocomplete="off" />
+            <input id="searchInput" placeholder="__MSG_searchPlaceholder__" autocomplete="off" />
             <kbd>⌘K</kbd>
           </div>
-          <div class="sidebar-meta"><span id="countLabel">0 chaves</span></div>
+          <div class="sidebar-meta"><span id="countLabel">0</span></div>
           <div id="keyList" class="key-list"></div>
           <footer class="storage-summary">
             <span class="summary-icon" data-icon="database"></span>
-            <strong id="summaryStorage">LocalStorage</strong>
-            <span id="summaryItems">0 itens</span>
+            <strong id="summaryStorage">__MSG_localStorage__</strong>
+            <span id="summaryItems">__MSG_itemsCount__</span>
             <span id="summarySize">0 B</span>
-            <button id="refreshBtn" class="summary-refresh" title="Atualizar" aria-label="Atualizar"><span class="btn-icon" data-icon="refresh"></span></button>
+            <button id="refreshBtn" class="summary-refresh" title="__MSG_refreshLabel__" aria-label="__MSG_refreshLabel__"><span class="btn-icon" data-icon="refresh"></span></button>
           </footer>
         </aside>
 
@@ -64,19 +64,19 @@
           <div id="permissionState" class="permission-state hidden">
             <div class="permission-card">
               <div class="permission-icon" data-icon="lock"></div>
-              <h2>Permissão necessária</h2>
-              <p>Para visualizar e editar LocalStorage e SessionStorage desta página, permita que o DataSidekick acesse apenas a origem atual.</p>
-              <strong id="permissionHost">Origem atual</strong>
-              <button id="grantAccessBtn" class="primary-btn permission-btn"><span class="btn-icon" data-icon="unlock"></span>Permitir acesso a este site</button>
-              <a class="permission-help-link" href="https://datasidekick.site/#access-control" target="_blank" rel="noopener noreferrer">Como funciona o acesso aos dados</a>
-              <small>O acesso vale apenas para esta origem. Seus dados não são enviados para servidores externos.</small>
+              <h2>__MSG_permissionNeeded__</h2>
+              <p>__MSG_permissionDesc__</p>
+              <strong id="permissionHost">__MSG_currentOrigin__</strong>
+              <button id="grantAccessBtn" class="primary-btn permission-btn"><span class="btn-icon" data-icon="unlock"></span>__MSG_allowAccess__</button>
+              <a class="permission-help-link" href="https://datasidekick.site/#access-control" target="_blank" rel="noopener noreferrer">__MSG_howAccessWorks__</a>
+              <small>__MSG_accessScopeNote__</small>
             </div>
           </div>
 
           <div id="emptyState" class="empty-state">
             <div class="empty-icon" data-icon="database"></div>
-            <h2>Nenhum dado selecionado</h2>
-            <p>Escolha uma key para editar ou importe um arquivo JSON.</p>
+            <h2>__MSG_noDataSelected__</h2>
+            <p>__MSG_noDataDesc__</p>
           </div>
 
           <div id="editorView" class="editor-view hidden">
@@ -87,9 +87,9 @@
               </div>
               <span id="selectedSize" class="selected-size">0 B</span>
               <div class="editor-actions">
-                <button id="saveBtn" class="primary-btn" disabled><span class="btn-icon" data-icon="save"></span>Salvar</button>
-                <button id="resetBtn" class="ghost-btn"><span class="btn-icon" data-icon="undo"></span>Resetar</button>
-                <button id="deleteKeyBtn" class="danger-btn"><span class="btn-icon" data-icon="trash"></span>Excluir chave</button>
+                <button id="saveBtn" class="primary-btn" disabled><span class="btn-icon" data-icon="save"></span>__MSG_save__</button>
+                <button id="resetBtn" class="ghost-btn"><span class="btn-icon" data-icon="undo"></span>__MSG_reset__</button>
+                <button id="deleteKeyBtn" class="danger-btn"><span class="btn-icon" data-icon="trash"></span>__MSG_deleteKey__</button>
               </div>
             </div>
             <div id="statusBar" class="status-bar"></div>
@@ -105,18 +105,18 @@
         <aside id="settingsPanel" class="settings-panel hidden" aria-modal="true" aria-labelledby="settingsTitle">
 
           <div class="settings-head">
-            <h2 id="settingsTitle">Configurações</h2>
-            <button id="closeSettingsBtn" class="close-btn" title="Fechar"><span class="btn-icon" data-icon="x"></span></button>
+            <h2 id="settingsTitle">__MSG_settingsTitle__</h2>
+            <button id="closeSettingsBtn" class="close-btn" title="__MSG_close__"><span class="btn-icon" data-icon="x"></span></button>
           </div>
 
           <section class="settings-section">
-            <h3>Aparência</h3>
-            <label>Tema</label>
+            <h3>__MSG_appearance__</h3>
+            <label>__MSG_theme__</label>
             <div class="theme-toggle">
-              <button id="darkModeBtn" class="theme-btn active"><span class="btn-icon" data-icon="moon"></span>Dark</button>
-              <button id="lightModeBtn" class="theme-btn"><span class="btn-icon" data-icon="sun"></span>Light</button>
+              <button id="darkModeBtn" class="theme-btn active"><span class="btn-icon" data-icon="moon"></span>__MSG_dark__</button>
+              <button id="lightModeBtn" class="theme-btn"><span class="btn-icon" data-icon="sun"></span>__MSG_light__</button>
             </div>
-            <label>Tamanho da fonte</label>
+            <label>__MSG_fontSize__</label>
             <div class="font-stepper">
               <button id="fontDecBtn">A-</button>
               <strong id="fontSizeLabel">14px</strong>
@@ -125,42 +125,42 @@
           </section>
 
           <section class="settings-section">
-            <h3>Filtro de foco</h3>
+            <h3>__MSG_focusFilter__</h3>
             <div class="setting-row">
-              <div><strong>Apenas origem atual</strong><small>Lê apenas dados da aba ativa.</small></div>
-              <button id="currentOriginToggle" class="toggle on" aria-label="Apenas origem atual"><span></span></button>
+              <div><strong>__MSG_currentOriginOnly__</strong><small>__MSG_readsActiveTab__</small></div>
+              <button id="currentOriginToggle" class="toggle on" aria-label="__MSG_currentOriginOnly__"><span></span></button>
             </div>
             <div class="setting-row">
-              <div><strong>Esconder keys ruidosas</strong><small>Oculta analytics, SDKs e rastreadores comuns.</small></div>
-              <button id="hideNoisyToggle" class="toggle on" aria-label="Esconder keys ruidosas"><span></span></button>
+              <div><strong>__MSG_hideNoisyKeys__</strong><small>__MSG_hidesTrackers__</small></div>
+              <button id="hideNoisyToggle" class="toggle on" aria-label="__MSG_hideNoisyKeys__"><span></span></button>
             </div>
             <div class="setting-row">
-              <div><strong>Keys ocultas manualmente</strong><small id="hiddenKeysCount">0 keys ocultas nesta origem</small></div>
-              <button id="resetHiddenBtn" class="small-outline-btn">Reexibir</button>
+              <div><strong>__MSG_hiddenKeys__</strong><small id="hiddenKeysCount">0 keys hidden</small></div>
+              <button id="resetHiddenBtn" class="small-outline-btn">__MSG_restore__</button>
             </div>
             <div id="hiddenKeysList" class="hidden-keys-list"></div>
           </section>
 
           <section class="settings-section">
-            <h3>Outros</h3>
+            <h3>__MSG_other__</h3>
             <div class="setting-row">
-              <div><strong>Mostrar tamanhos</strong><small>Exibir o tamanho dos valores na lista</small></div>
-              <button id="showSizesToggle" class="toggle on" aria-label="Mostrar tamanhos"><span></span></button>
+              <div><strong>__MSG_showSizes__</strong><small>__MSG_showSizesDesc__</small></div>
+              <button id="showSizesToggle" class="toggle on" aria-label="__MSG_showSizes__"><span></span></button>
             </div>
           </section>
 
           <section class="settings-section">
-            <h3>Confirmações</h3>
+            <h3>__MSG_confirmations__</h3>
             <div class="setting-row">
-              <div><strong>Pedir confirmação ao excluir</strong><small>Mostrar confirmação antes de excluir chaves ou limpar tudo</small></div>
-              <button id="confirmToggle" class="toggle on" aria-label="Pedir confirmação"><span></span></button>
+              <div><strong>__MSG_askBeforeDelete__</strong><small>__MSG_askBeforeDeleteDesc__</small></div>
+              <button id="confirmToggle" class="toggle on" aria-label="__MSG_askBeforeDelete__"><span></span></button>
             </div>
           </section>
 
           <section class="settings-section about">
-            <h3>Sobre</h3>
-            <p><span class="btn-icon" data-icon="database"></span>DataSidekick v0.1.4</p>
-            <small>Feito com <span class="heart">♥</span> para desenvolvedores</small>
+            <h3>__MSG_about___</h3>
+            <p><span class="btn-icon" data-icon="database"></span>DataSidekick v0.1.5</p>
+            <small>__MSG_madeForDevs__</small>
           </section>
         </aside>
 
@@ -168,44 +168,44 @@
 
         <aside id="helpPanel" class="help-panel hidden" aria-modal="true" aria-labelledby="helpTitle">
           <div class="settings-head">
-            <h2 id="helpTitle">Ajuda</h2>
-            <button id="closeHelpBtn" class="close-btn" title="Fechar"><span class="btn-icon" data-icon="x"></span></button>
+            <h2 id="helpTitle">__MSG_helpTitle__</h2>
+            <button id="closeHelpBtn" class="close-btn" title="__MSG_close__"><span class="btn-icon" data-icon="x"></span></button>
           </div>
 
           <section class="help-section">
-            <h3>Como começar</h3>
+            <h3>__MSG_gettingStarted__</h3>
             <ol>
-              <li>Abra uma página ou aplicação local em uma aba do Chrome.</li>
-              <li>Clique no DataSidekick para abrir o painel lateral.</li>
-              <li>Permita o acesso à origem atual quando o painel solicitar.</li>
-              <li>Escolha entre LocalStorage e SessionStorage no topo.</li>
+              <li>__MSG_helpStep1__</li>
+              <li>__MSG_helpStep2__</li>
+              <li>__MSG_helpStep3__</li>
+              <li>__MSG_helpStep4__</li>
             </ol>
           </section>
 
           <section class="help-section">
-            <h3>Editar dados</h3>
-            <p>Selecione uma key na lista para abrir o editor. Valores JSON válidos aparecem como árvore editável; valores simples aparecem como texto.</p>
-            <p>Depois de alterar um valor, clique em Salvar ou use Ctrl+S / Cmd+S.</p>
+            <h3>__MSG_editData__</h3>
+            <p>__MSG_editDataDesc__</p>
+            <p>__MSG_editDataSave__</p>
           </section>
 
           <section class="help-section">
-            <h3>Organizar a lista</h3>
+            <h3>__MSG_organizeList__</h3>
             <ul>
-              <li>Use a busca para localizar keys ou conteúdos.</li>
-              <li>Favorite keys importantes com o ícone de estrela.</li>
-              <li>Oculte keys ruidosas ou específicas pelas ações da lista.</li>
-              <li>Reexiba keys ocultas em Configurações.</li>
+              <li>__MSG_orgSearch__</li>
+              <li>__MSG_orgFavorite__</li>
+              <li>__MSG_orgHide__</li>
+              <li>__MSG_orgUnhide__</li>
             </ul>
           </section>
 
           <section class="help-section">
-            <h3>Importar e exportar</h3>
-            <p>Exportar gera um arquivo JSON com metadados da origem, tipo de storage e itens atuais. Importar aceita esse formato ou um objeto JSON simples de chave e valor.</p>
+            <h3>__MSG_importExport__</h3>
+            <p>__MSG_importExportDesc__</p>
           </section>
 
           <section class="help-section">
-            <h3>Privacidade</h3>
-            <p>O DataSidekick roda localmente no navegador. Ele lê e altera apenas o storage da aba ativa, depois que você concede permissão para aquela origem.</p>
+            <h3>__MSG_privacy___</h3>
+            <p>__MSG_privacyDesc__</p>
           </section>
         </aside>
       </main>

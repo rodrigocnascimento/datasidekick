@@ -1,6 +1,19 @@
 # Changelog
 
-# v0.1.4 — Settings overlay
+## v0.1.5 — Internacionalização (i18n)
+
+### Adicionado
+- Sistema de internacionalização com `_locales/en/` e `_locales/pt_BR/`.
+- `manifest.json` agora usa `__MSG_*__` e `default_locale` para nome e descrição.
+- `sidepanel.html` com `__MSG_*__` em todos os textos estáticos (labels, títulos, placeholders).
+- `sidepanel.js` com `chrome.i18n.getMessage()` para strings dinâmicas (toasts, erros, status).
+- `background.js` detecta idioma do navegador (`@@ui_locale`) para abrir playground correto.
+
+### Alterado
+- Todas as strings do addon externalizadas para arquivos de mensagens.
+- Bump de versão para v0.1.5.
+
+## v0.1.4 — Settings overlay
 
 - Settings agora abre fechada por padrão.
 - Painel de configurações abre como overlay sobre a interface, sem espremer sidebar/editor.
