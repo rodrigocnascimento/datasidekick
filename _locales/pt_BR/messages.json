@@ -21,9 +21,28 @@
   "clearAll": { "message": "Limpar tudo" },
   "searchPlaceholder": { "message": "Buscar chave ou valor..." },
   "refreshLabel": { "message": "Atualizar" },
-  "itemsCount": { "message": "$1$ itens" },
-  "keysFound": { "message": "$1$ chave$2$ encontrada$3$$4$" },
-  "hiddenSuffix": { "message": " \u00b7 $1$ oculta$2$" },
+  "itemsCount": {
+    "message": "$count$ itens",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "keysFound": {
+    "message": "$count$ chave$keyPlural$ encontrada$foundPlural$$hiddenPart$",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" },
+      "keyPlural": { "content": "$2", "example": "s" },
+      "foundPlural": { "content": "$3", "example": "s" },
+      "hiddenPart": { "content": "$4", "example": "" }
+    }
+  },
+  "hiddenSuffix": {
+    "message": " \u00b7 $count$ oculta$hiddenPlural$",
+    "placeholders": {
+      "count": { "content": "$1", "example": "2" },
+      "hiddenPlural": { "content": "$2", "example": "s" }
+    }
+  },
 
   "permissionNeeded": { "message": "Permissão necessária" },
   "permissionDesc": {
@@ -55,7 +74,14 @@
   "hideNoisyKeys": { "message": "Esconder keys ruidosas" },
   "hidesTrackers": { "message": "Oculta analytics, SDKs e rastreadores comuns." },
   "hiddenKeys": { "message": "Keys ocultas manualmente" },
-  "hiddenKeysCount": { "message": "$1$ key$2$ oculta$3$ nesta origem" },
+  "hiddenKeysCount": {
+    "message": "$count$ key$keyPlural$ oculta$hiddenPlural$ nesta origem",
+    "placeholders": {
+      "count": { "content": "$1", "example": "2" },
+      "keyPlural": { "content": "$2", "example": "s" },
+      "hiddenPlural": { "content": "$3", "example": "s" }
+    }
+  },
   "restore": { "message": "Reexibir" },
   "other": { "message": "Outros" },
   "showSizes": { "message": "Mostrar tamanhos" },
@@ -106,23 +132,48 @@
   "invalidJson": { "message": "Arquivo JSON inválido" },
   "valueCopied": { "message": "Valor copiado" },
   "accessGranted": { "message": "Acesso concedido" },
-  "confirmDelete": { "message": "Clique novamente para excluir \"$1$\"" },
+  "confirmDelete": {
+    "message": "Clique novamente para excluir \"$key$\"",
+    "placeholders": {
+      "key": { "content": "$1", "example": "userId" }
+    }
+  },
   "confirmClearAll": { "message": "Clique em \"Limpar tudo\" novamente para confirmar" },
   "noHiddenKeys": { "message": "Nenhuma key oculta nesta origem" },
   "allKeysRestored": { "message": "Todas as keys ocultas foram reexibidas" },
-  "keyHidden": { "message": "\"$1$\" ocultada" },
-  "keyRestored": { "message": "\"$1$\" reexibida" },
+  "keyHidden": {
+    "message": "\"$key$\" ocultada",
+    "placeholders": {
+      "key": { "content": "$1", "example": "userId" }
+    }
+  },
+  "keyRestored": {
+    "message": "\"$key$\" reexibida",
+    "placeholders": {
+      "key": { "content": "$1", "example": "userId" }
+    }
+  },
   "readingStaysFocused": { "message": "Leitura continua focada na aba ativa por segurança" },
   "noActiveTab": { "message": "Nenhuma aba ativa encontrada." },
   "originUnavailable": { "message": "Origem indisponível" },
   "storageNotAllowed": { "message": "Esta página não permite acesso ao storage. Use uma página http ou https." },
-  "permissionDenied": { "message": "Permissão negada para acessar $1$." },
+  "permissionDenied": {
+    "message": "Permissão negada para acessar $origin$.",
+    "placeholders": {
+      "origin": { "content": "$1", "example": "example.com" }
+    }
+  },
   "storageAccessError": { "message": "Não foi possível acessar o storage desta página." },
   "githubError": { "message": "Não foi possível abrir o GitHub." },
   "permissionError": { "message": "Não foi possível solicitar permissão." },
   "expand": { "message": "Expandir" },
   "collapse": { "message": "Recolher" },
-  "metaItems": { "message": "$1$ itens" },
+  "metaItems": {
+    "message": "$count$ itens",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
   "addItem": { "message": "Adicionar item" },
   "deleteItem": { "message": "Excluir item" },
   "typePrompt": { "message": "Tipo: string, number, boolean, object, array, null" },
