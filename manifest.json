@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "__MSG_appName__",
-  "description": "__MSG_appDescription__",
+  "name": "datasidekick",
+  "description": "Datasidekick",
   "default_locale": "pt_BR",
   "version": "0.1.6",
   "minimum_chrome_version": "114",
@@ -13,7 +13,7 @@
     "downloads"
   ],
   "action": {
-    "default_title": "__MSG_openSidePanel__"
+    "default_title": "datasidekick"
   },
   "background": {
     "service_worker": "background.js"
