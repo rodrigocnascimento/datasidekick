@@ -1,5 +1,18 @@
 # Changelog
 
+## v0.1.7 — Correções de internacionalização
+
+### Corrigido
+- Placeholders de i18n (`$1$`, `$2$`, …) convertidos para o formato do Chrome (`$nome$` + bloco `placeholders`), eliminando o erro *Variable $1$ used but not defined* ao carregar a extensão.
+- `applyI18n()` no `sidepanel.js` para substituir `__MSG_*__` no HTML em tempo de execução (o Chrome não processa esses tokens em páginas do side panel).
+- Referência `__MSG_itemsCount__` removida do HTML (valor dinâmico preenchido apenas via JS).
+- Chave `__MSG_settings___` corrigida para o message `settings_`.
+- Chave inexistente `permissionRequired` trocada por `permissionNeeded` no estado de permissão pendente.
+- Função `t()` ajustada para aceitar substituições passadas como array (`t('itemsCount', ['5'])`).
+
+### Alterado
+- Bump de versão para v0.1.7.
+
 ## v0.1.6 — Observação bidirecional do storage
 
 ### Adicionado
