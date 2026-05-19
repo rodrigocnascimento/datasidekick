@@ -1,5 +1,37 @@
 function t(key, ...args) {
-  return chrome.i18n.getMessage(key, args.length ? args : undefined);
+  const subs = args.length === 1 && Array.isArray(args[0]) ? args[0] : args;
+  return chrome.i18n.getMessage(key, subs.length ? subs : undefined);
+}
+
+const I18N_ATTRS = ['title', 'aria-label', 'placeholder', 'alt'];
+
+function msgFromRef(ref) {
+  let msg = chrome.i18n.getMessage(ref);
+  if (!msg && !ref.endsWith('_')) msg = chrome.i18n.getMessage(`${ref}_`);
+  return msg || '';
+}
+
+function replaceMsgTokens(text) {
+  if (!text || !text.includes('__MSG_')) return text;
+  return text.replace(/__MSG_([a-zA-Z0-9@_]+)__/g, (full, ref) => msgFromRef(ref) || full);
+}
+
+/** Chrome does not replace __MSG_*__ in extension HTML; apply at runtime. */
+function applyI18n(root = document.body) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    const next = replaceMsgTokens(node.nodeValue);
+    if (next !== node.nodeValue) node.nodeValue = next;
+  }
+  root.querySelectorAll('*').forEach((el) => {
+    for (const attr of I18N_ATTRS) {
+      if (!el.hasAttribute(attr)) continue;
+      const val = el.getAttribute(attr);
+      const next = replaceMsgTokens(val);
+      if (next !== val) el.setAttribute(attr, next);
+    }
+  });
 }
 
 const $ = (s) => document.querySelector(s);
@@ -116,7 +148,7 @@ function showPermissionState(message) {
   els.emptyState?.classList.add('hidden');
   els.editorView?.classList.add('hidden');
   els.keyList.innerHTML = `<div class="empty-state" style="min-height:180px"><h2>${t('pendingAccess')}</h2><p>${t('pendingAccessDesc')}</p></div>`;
-  els.countLabel.textContent = t('permissionRequired');
+  els.countLabel.textContent = t('permissionNeeded');
   updateSummary([]);
   if (message) els.permissionState.querySelector('p').textContent = message;
 }
@@ -574,6 +606,7 @@ function bindEvents() {
   });
 }
 
+applyI18n();
 hydrateIcons();
 loadSettings();
 bindEvents();
