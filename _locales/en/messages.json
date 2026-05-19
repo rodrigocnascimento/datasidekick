@@ -21,9 +21,27 @@
   "clearAll": { "message": "Clear all" },
   "searchPlaceholder": { "message": "Search key or value..." },
   "refreshLabel": { "message": "Refresh" },
-  "itemsCount": { "message": "$1$ items" },
-  "keysFound": { "message": "$1$ key$2$ found$3$" },
-  "hiddenSuffix": { "message": " \u00b7 $1$ hidden" },
+  "itemsCount": {
+    "message": "$count$ items",
+    "placeholders": {
+      "count": { "content": "$1", "example": "5" }
+    }
+  },
+  "keysFound": {
+    "message": "$count$ key$keyPlural$ found$foundPlural$$hiddenPart$",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" },
+      "keyPlural": { "content": "$2", "example": "s" },
+      "foundPlural": { "content": "$3", "example": "s" },
+      "hiddenPart": { "content": "$4", "example": "" }
+    }
+  },
+  "hiddenSuffix": {
+    "message": " \u00b7 $count$ hidden",
+    "placeholders": {
+      "count": { "content": "$1", "example": "2" }
+    }
+  },
 
   "permissionNeeded": { "message": "Permission required" },
   "permissionDesc": {
@@ -55,7 +73,13 @@
   "hideNoisyKeys": { "message": "Hide noisy keys" },
   "hidesTrackers": { "message": "Hides analytics, SDKs and common trackers." },
   "hiddenKeys": { "message": "Manually hidden keys" },
-  "hiddenKeysCount": { "message": "$1$ key$2$ hidden on this origin" },
+  "hiddenKeysCount": {
+    "message": "$count$ key$keyPlural$ hidden on this origin",
+    "placeholders": {
+      "count": { "content": "$1", "example": "2" },
+      "keyPlural": { "content": "$2", "example": "s" }
+    }
+  },
   "restore": { "message": "Restore" },
   "other": { "message": "Other" },
   "showSizes": { "message": "Show sizes" },
@@ -106,23 +130,48 @@
   "invalidJson": { "message": "Invalid JSON file" },
   "valueCopied": { "message": "Value copied" },
   "accessGranted": { "message": "Access granted" },
-  "confirmDelete": { "message": "Click again to delete \"$1$\"" },
+  "confirmDelete": {
+    "message": "Click again to delete \"$key$\"",
+    "placeholders": {
+      "key": { "content": "$1", "example": "userId" }
+    }
+  },
   "confirmClearAll": { "message": "Click \"Clear all\" again to confirm" },
   "noHiddenKeys": { "message": "No keys hidden on this origin" },
   "allKeysRestored": { "message": "All hidden keys restored" },
-  "keyHidden": { "message": "\"$1$\" hidden" },
-  "keyRestored": { "message": "\"$1$\" restored" },
+  "keyHidden": {
+    "message": "\"$key$\" hidden",
+    "placeholders": {
+      "key": { "content": "$1", "example": "userId" }
+    }
+  },
+  "keyRestored": {
+    "message": "\"$key$\" restored",
+    "placeholders": {
+      "key": { "content": "$1", "example": "userId" }
+    }
+  },
   "readingStaysFocused": { "message": "Reading stays focused on the active tab for safety" },
   "noActiveTab": { "message": "No active tab found." },
   "originUnavailable": { "message": "Origin unavailable" },
   "storageNotAllowed": { "message": "This page does not allow storage access. Use an http or https page." },
-  "permissionDenied": { "message": "Permission denied to access $1$." },
+  "permissionDenied": {
+    "message": "Permission denied to access $origin$.",
+    "placeholders": {
+      "origin": { "content": "$1", "example": "example.com" }
+    }
+  },
   "storageAccessError": { "message": "Could not access storage for this page." },
   "githubError": { "message": "Could not open GitHub." },
   "permissionError": { "message": "Could not request permission." },
   "expand": { "message": "Expand" },
   "collapse": { "message": "Collapse" },
-  "metaItems": { "message": "$1$ items" },
+  "metaItems": {
+    "message": "$count$ items",
+    "placeholders": {
+      "count": { "content": "$1", "example": "3" }
+    }
+  },
   "addItem": { "message": "Add item" },
   "deleteItem": { "message": "Delete item" },
   "typePrompt": { "message": "Type: string, number, boolean, object, array, null" },
