@@ -516,7 +516,7 @@ async function deleteKey(key = state.selectedKey) {
 }
 async function exportData() {
   const data = Object.fromEntries(state.entries.map(e => [e.key, e.value]));
-  const payload = { app: 'DataSidekick', version: '0.1.6', origin: state.origin, storage: state.storage, exportedAt: new Date().toISOString(), items: data };
+  const payload = { app: 'DataSidekick', version: '0.1.7', origin: state.origin, storage: state.storage, exportedAt: new Date().toISOString(), items: data };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `datasidekick-${state.storage}-${Date.now()}.json`; a.click(); URL.revokeObjectURL(url); toast(t('dataExported'));
 }
