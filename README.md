@@ -52,7 +52,7 @@ A página é 100% estática e pode ser publicada em:
 
 ## Versão
 
-Versão atual: `v0.1.4`
+Versão atual: `v0.1.8`
 
 ## Projeto
 
