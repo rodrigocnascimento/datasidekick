@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.1.8
+
+### Corrigido
+- Removida a permissão `downloads` do `manifest.json`.
+- Mantida a exportação de JSON usando `Blob` + `<a download>`, sem necessidade da API `chrome.downloads`.
+- Atualizadas as permissões para atender à política de menor escopo da Chrome Web Store.
+- Mantidas permissões opcionais de host com `optional_host_permissions`, solicitando acesso por origem somente quando necessário.
+
+### Motivo da versão
+Esta versão atende à revisão da Chrome Web Store, que apontou que a permissão `downloads` era solicitada, mas não utilizada diretamente pela extensão.
+
 ## v0.1.7 — Correções de internacionalização
 
 ### Corrigido

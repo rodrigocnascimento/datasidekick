@@ -117,7 +117,7 @@ O DataSidekick utiliza permissões de extensão do Chrome para fornecer sua func
 
 ## Versão
 
-Versão atual: `v0.1.7`
+Versão atual: `v0.1.8`
 
 Consulte o arquivo [CHANGELOG.md](./CHANGELOG.md) para obter as notas de lançamento.
 
